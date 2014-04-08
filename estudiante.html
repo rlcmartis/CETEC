@@ -1,0 +1,50 @@
+<html>
+	<head>
+  		<meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	<link href="css/bootstrap.css" rel="stylesheet">
+     	<link href="css/cetec.css" rel="stylesheet">
+
+		<title>Evaluaciones</title>
+	</head>
+	<body>
+		<div class="jumbotron" id="nombre-num">
+			<h1>Nombre: DumpName</h1>
+			<h3 id="h-num">Numero de estudiante: 109823</h3>
+		</div>
+
+		<ul class="nav nav-tabs nav-justified">
+		  <li class="active"><a href="#c1">Curso 1</a></li>
+		  <li><a href="#c2">Curso 2</a></li>
+		  <li><a href="#c3">Curso 3</a></li>
+		</ul>
+
+		<div id="c1">
+			<table class="table">
+				<thead colspan="3">Tabla de curso 1</thead>
+				<tbody>
+					<tr>
+						<?php
+							for ($colu = 0; $colu < 3; $colu++) {echo "<td>";}
+						?>
+						Listo
+						<?php
+							for ($colu = 0; $colu < 3; $colu++) {echo "</td>";}
+						?>
+					</tr>
+					<tr></tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div id="c2">
+			<table>
+			</table>
+		</div>
+		<div id="c3">
+			<table>
+			</table>
+		</div>
+	</body>
+</html>
