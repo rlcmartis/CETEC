@@ -31,7 +31,7 @@
 	margin-top: 0px;
 }
 
-#lineaDeSeccion{
+#lineaDeSesion{
 	margin-top: -16px;
 }
 
@@ -48,4 +48,10 @@
 #botonM{
 	margin-top: 12;
 	margin-left: 53;
+}
+
+#input-pass{
+	margin-top: 7;
+	margin-left: 35;
+	margin-right: 35;
 }
