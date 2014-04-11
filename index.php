@@ -1,4 +1,8 @@
-<!DOCTYPE HTML>
+<?php
+
+echo "HELLO WORLD";
+
+?>
 <html>
   <head>
   	<meta charset="utf-8">
