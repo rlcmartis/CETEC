@@ -56,6 +56,12 @@
 	margin-right: 35;
 }
 
-#mia{
-	
+#idBox{
+	margin-bottom: 7;
+	border-radius: 5;
+}
+
+#passBox{
+	margin-bottom: 7;
+	border-radius: 5;
 }

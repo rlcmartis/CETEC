@@ -42,25 +42,25 @@
               <h3 class="modal-title" id="myModalLabel">Añadir Estudiante</h3>
             </div>
             <div class="modal-body">
-               <form class="form-signin">
+               <form class="form-signin" method="post" action="insertStu.php">
                   <!-- Nombre box -->
-                  <div class="row" id="input-pass" >
-                    <input type="text" class="form-control" placeholder="Nombre de Estudiante">
+                  <div class="row" id="input-pass">
+                    <input type="text" class="form-control" placeholder="Nombre de Estudiante" name="nombreE">
                   </div>
 
                   <!-- Fecha de Admision box -->
                   <div class="row" id="input-pass"> 
-                    <input type="text" class="form-control" placeholder="Fecha de Admisión">
+                    <input type="text" class="form-control" placeholder="Fecha de Admisión" name="fechaA">
                   </div>
 
                   <!-- Fecha de Graduación box -->
                   <div class="row" id="input-pass"> 
-                    <input type="text" class="form-control" placeholder="Fecha de Graduación">
+                    <input type="text" class="form-control" placeholder="Fecha de Graduación" name="fechaG">
                   </div>
 
                   <!-- Fecha de Graduación box -->
                   <div class="row" id="input-pass"> 
-                    <input type="text" class="form-control" placeholder="Identificación de Estudiante">
+                    <input type="text" class="form-control" placeholder="Identificación de Estudiante" name="idE">
                   </div>
 
 
@@ -71,17 +71,17 @@
                     </label>
                     &nbsp;
                      <select class="selectpicker">
-					    <option>Grupo 1</option>
-					    <option>Grupo 2</option>
-					    <option>Grupo 3</option>
-					 </select>
+        					    <option>Grupo 1</option>
+        					    <option>Grupo 2</option>
+        					    <option>Grupo 3</option>
+        					 </select>
                   </div>
-               </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary">Aceptar</button>
+              <button type="submit" class="btn btn-primary">Aceptar</button>
             </div>
+            </form>
           </div>
         </div>
       </div>
@@ -155,7 +155,7 @@
 		<div class="jumbotron" id="nombre-num">
 			<div class= "row" id="lineaDeSesion"> 
 				<div class="col-md-11 col-md-offset-6">
-					<a href="index.html">Cerrar Sesión</a>				
+					<a href="logout.php">Cerrar Sesión</a>				
 				</div>
 			</div>
 			<h1>Registros</h1>
@@ -183,12 +183,44 @@
               </tr>
               <?php
                while($row = mysql_fetch_row($resultado)){
-                    echo "<tr>";
-                    foreach ($row as $key => $value) {
-                      echo "<td>".$value."</td>";
+                    echo '<tr href="http://google.com">';
+                    // echo '<a href="http://ada.uprrp.edu/~jdelacruz/CETEC/estudiante.php?idE='.$row[4].'">';
+                    // echo $row[4];
+                    echo "<td>".'<a href="http://ada.uprrp.edu/~jdelacruz/CETEC/estudiante.php?idE='.$row[4].'">'.$row[0]."</a>"."</td>";
+                    if($row[1] == 1){
+                      echo "<td> Sí </td>";
                     }
+                    else{
+                      echo "<td> No </td>";
+                    }
+                    // echo "<td>".$row[1]."</td>";
+                    echo "<td>".$row[2]."</td>";
+                    echo "<td>".$row[3]."</td>";
+                    echo "<td>".$row[4]."</td>";
+                    // echo "</a>";
+                    // foreach ($row as $key => $value) {
+                    //   echo "<td>".$value."</td>";
+                    // }
                     // echo "<td>".$row[0].$row[1]."</td>";
                     // echo "</tr>";
+                    echo "<td>";
+                    ?>
+                    <form action="editarStu.php" method="post">
+                      <input type="hidden" name="idE" value="<?php echo $row[4]; ?>">
+                      <button type="submit" class="btn btn-info"> Editar </button>
+                    </form>
+                    <?php
+                      echo "</td>";
+                      echo "<td>";
+                    ?>
+                    <form action='deleteStu.php' method="post">
+                      <input type="hidden" name="idE" value="<?php echo $row[4]; ?>">
+                      <button type="submit" class="btn btn-danger"> Borrar </button>
+                    </form>
+                    
+
+              <?php
+              echo "</td>";
                 }
               ?>
             </table>
