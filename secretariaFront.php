@@ -1,4 +1,9 @@
 <?php
+session_start();
+if(!isset($_SESSION['idE']))
+    {
+    header("location:index.php");
+  }
   echo "Hello World";
   $host = "localhost";
   $usuario = "jdelacruz";
@@ -21,19 +26,19 @@
 ?>
 
 <html>
-	<head>
-  		<meta charset="utf-8">
-    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    	<meta name="viewport" content="width=device-width, initial-scale=1">
-    	<link href="css/bootstrap.css" rel="stylesheet">
-    	<link href="css/bootstrap.min.css" rel="stylesheet">
-     	<link href="css/cetec.css" rel="stylesheet">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="css/bootstrap.css" rel="stylesheet">
+      <link href="css/bootstrap.min.css" rel="stylesheet">
+      <link href="css/cetec.css" rel="stylesheet">
 
-		<title>SecretariaFront</title>
-	</head>
-	<body>
+    <title>SecretariaFront</title>
+  </head>
+  <body>
 
-		<!-- Modal Estudiantes-->
+    <!-- Modal Estudiantes-->
       <div class="modal fade" id="myModalE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -71,10 +76,10 @@
                     </label>
                     &nbsp;
                      <select class="selectpicker" name="grupo">
-        					    <option>Grupo 1</option>
-        					    <option>Grupo 2</option>
-        					    <option>Grupo 3</option>
-        					 </select>
+                      <option>Grupo 1</option>
+                      <option>Grupo 2</option>
+                      <option>Grupo 3</option>
+                   </select>
                   </div>
             </div>
             <div class="modal-footer">
@@ -152,27 +157,27 @@
       </div>
 
 
-		<div class="jumbotron" id="nombre-num">
-			<div class= "row" id="lineaDeSesion"> 
-				<div class="col-md-11 col-md-offset-6">
-					<a href="logout.php">Cerrar Sesión</a>				
-				</div>
-			</div>
-			<h1>Registros</h1>
-		</div>
-		
-		<ul class="nav nav-tabs nav-justified" id="myTab">
-		  <li class="active"><a href="#estudiantes" data-toggle="tab">Estudiantes</a></li>
-		  <li><a href="#cursos" data-toggle="tab">Cursos</a></li>
-		  <li><a href="#maestros" data-toggle="tab">Maestros</a></li>
-		</ul>
+    <div class="jumbotron" id="nombre-num">
+      <div class= "row" id="lineaDeSesion"> 
+        <div class="col-md-11 col-md-offset-6">
+          <a href="logout.php">Cerrar Sesión</a>        
+        </div>
+      </div>
+      <h1>Registros</h1>
+    </div>
+    
+    <ul class="nav nav-tabs nav-justified" id="myTab">
+      <li class="active"><a href="#estudiantes" data-toggle="tab">Estudiantes</a></li>
+      <li><a href="#cursos" data-toggle="tab">Cursos</a></li>
+      <li><a href="#maestros" data-toggle="tab">Maestros</a></li>
+    </ul>
 
-		<!-- Tab Panes -->
+    <!-- Tab Panes -->
     <!-- Tab Estudiantes -->
-		<div class="tab-content">
-			<div class="tab-pane active" id ="estudiantes">
-				<div class="row">
-					<div class="col-md-8">
+    <div class="tab-content">
+      <div class="tab-pane active" id ="estudiantes">
+        <div class="row">
+          <div class="col-md-8">
             <table style="width:700px">
               <tr>
                 <th>Nombre</th>
@@ -227,70 +232,70 @@
               ?>
             </table>
     
-						<!-- <table class="table">
-						<thead colspan="3">Tabla de curso 1</thead>
-						<tbody>
-							<tr>
-								<?php
-									// for ($colu = 0; $colu < 3; $colu++) {echo "<td>";}
-								?>
-								Listo
-								<?php
-									// for ($colu = 0; $colu < 3; $colu++) {echo "</td>";}
-								?>
-							</tr>
-							<tr></tr>
-						</tbody>
-						</table> -->
-					</div>
-					<div class="col-md-2 col-md-offset-2">
-						<div class="btn-group" id="botonE">
-					 		<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalE">
-					 			Añadir Estudiante
-					 		</button>
-					 	</div>
-					</div>
-				</div>
-			</div>
+            <!-- <table class="table">
+            <thead colspan="3">Tabla de curso 1</thead>
+            <tbody>
+              <tr>
+                <?php
+                  // for ($colu = 0; $colu < 3; $colu++) {echo "<td>";}
+                ?>
+                Listo
+                <?php
+                  // for ($colu = 0; $colu < 3; $colu++) {echo "</td>";}
+                ?>
+              </tr>
+              <tr></tr>
+            </tbody>
+            </table> -->
+          </div>
+          <div class="col-md-2 col-md-offset-2">
+            <div class="btn-group" id="botonE">
+              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalE">
+                Añadir Estudiante
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     <!-- Tab cursos -->
-		<div class="tab-pane" id="cursos">
-			<div class="row">
-					<div class="col-md-8">
-						Hellooooooooo
-					</div>
-				<div class="col-md-2 col-md-offset-2">
+    <div class="tab-pane" id="cursos">
+      <div class="row">
+          <div class="col-md-8">
+            Hellooooooooo
+          </div>
+        <div class="col-md-2 col-md-offset-2">
 
-					<div class="btn-group" id="botonC">
-						<a data-toggle="modal" href="#myModalC" class="btn btn-info">Añadir Curso</a>
-				 		<!-- <button type="button" class="btn btn-info" data-target="#myModalC">Añadir Curso</button> -->
-					</div>
-				</div>
-			</div>
-		</div>
+          <div class="btn-group" id="botonC">
+            <a data-toggle="modal" href="#myModalC" class="btn btn-info">Añadir Curso</a>
+            <!-- <button type="button" class="btn btn-info" data-target="#myModalC">Añadir Curso</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Tab Maestros -->
-		<div class="tab-pane" id="maestros">
-			<div class="row">
-				<div class="col-md-8">
-					HOLAAAAAAAA
-				</div>
-				<div class="col-md-2 col-md-offset-2">
-					<div class="btn-group" id="botonM">
-						<a data-toggle="modal" href="#myModalM" class="btn btn-info">Añadir Maestro</a>
-				 		<!-- <button type="button" class="btn btn-info" data-target="#myModalM">Añadir Maestro</button> -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <div class="tab-pane" id="maestros">
+      <div class="row">
+        <div class="col-md-8">
+          HOLAAAAAAAA
+        </div>
+        <div class="col-md-2 col-md-offset-2">
+          <div class="btn-group" id="botonM">
+            <a data-toggle="modal" href="#myModalM" class="btn btn-info">Añadir Maestro</a>
+            <!-- <button type="button" class="btn btn-info" data-target="#myModalM">Añadir Maestro</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="../../dist/js/bootstrap.min.js"></script>
-	<script src="js/bootstrap.js"></script>
+  <script src="js/bootstrap.js"></script>
     <script>
-		  $(function () {
-		    $('#myTab a:first').tab('show')
-		  })
-  	</script>
-	</body>
+      $(function () {
+        $('#myTab a:first').tab('show')
+      })
+    </script>
+  </body>
 
 <!-- Closing the Database -->
 <?php
