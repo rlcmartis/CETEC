@@ -49,14 +49,24 @@ $row = mysql_fetch_row($resultado);
 	                  <!-- checkbox row -->
 	                  <div class="row" id="input-pass">
 	                    <label id="Pago">
-	                      <input type="checkbox" name="pago"> Pagó
+	                      <input type="checkbox" name="pago" <?php
+									                    		if ($row[1] == 1) {
+									                    			echo 'checked="checked"';
+									                    		}
+									                    	 ?> > Pagó
 	                    </label>
 	                    &nbsp;
 	                     <select class="selectpicker" name="grupo">
-	        					    <option>Grupo 1</option>
-	        					    <option>Grupo 2</option>
-	        					    <option>Grupo 3</option>
-	        					 </select>
+	        					    <option <?php
+										if ($row[6] == "1") { echo " selected"; }
+										?> >Grupo 1</option>
+	        					    <option <?php
+										if ($row[6] == "2") { echo " selected"; }
+										?> >Grupo 2</option>
+	        					    <option <?php
+										if ($row[6] == "3") { echo " selected"; }
+										?> >Grupo 3</option>
+	        			</select>
 	                  </div>
 	            </div>
 	            <div class="modal-footer">
