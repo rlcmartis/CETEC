@@ -27,9 +27,9 @@ $sqlVerifica = 'SELECT * FROM estudiante WHERE idE ="'.$idE.'"';
 $resultado = mysql_query($sqlVerifica);
 
 if(mysql_num_rows($resultado) > 0){
-	$sql_update = 'UPDATE estudiante SET name="'.$nombre.'", pago='.$pago.', entro="'.$fechaA.'", sale="'.$fechaG.'", idE="'.$idE.'"WHERE idE='.$idE;
+	$sql_update = 'UPDATE estudiante SET nombre="'.$nombre.'", pago='.$pago.', entro="'.$fechaA.'", sale="'.$fechaG.'", idE="'.$idE.'"WHERE idE='.$idE;
 	$result = mysql_query($sql_update);
-	echo "hola";
+	header("location:secretariaFront.php");
 }
 else{
 $sql_insertE = 'INSERT INTO estudiante (nombre, pago, entro, sale, idE, password) 
