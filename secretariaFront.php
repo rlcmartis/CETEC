@@ -70,7 +70,7 @@
                       <input type="checkbox" name="pago"> Pagó
                     </label>
                     &nbsp;
-                     <select class="selectpicker">
+                     <select class="selectpicker" name="grupo">
         					    <option>Grupo 1</option>
         					    <option>Grupo 2</option>
         					    <option>Grupo 3</option>
@@ -180,6 +180,7 @@
                 <th>Entró</th>
                 <th>Sale</th>
                 <th>IdE</th>
+                <th>Grupo<th>
               </tr>
               <?php
                while($row = mysql_fetch_row($resultado)){
@@ -197,6 +198,7 @@
                     echo "<td>".$row[2]."</td>";
                     echo "<td>".$row[3]."</td>";
                     echo "<td>".$row[4]."</td>";
+                    echo "<td>".$row[6]."</td>";
                     // echo "</a>";
                     // foreach ($row as $key => $value) {
                     //   echo "<td>".$value."</td>";

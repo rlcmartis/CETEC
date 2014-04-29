@@ -52,7 +52,7 @@ $row = mysql_fetch_row($resultado);
 	                      <input type="checkbox" name="pago"> Pagó
 	                    </label>
 	                    &nbsp;
-	                     <select class="selectpicker">
+	                     <select class="selectpicker" name="grupo">
 	        					    <option>Grupo 1</option>
 	        					    <option>Grupo 2</option>
 	        					    <option>Grupo 3</option>
@@ -60,7 +60,7 @@ $row = mysql_fetch_row($resultado);
 	                  </div>
 	            </div>
 	            <div class="modal-footer">
-	              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+	              <a href="secretariaFront.php"><button type="button" class="btn btn-danger" >Cancelar</button></a>
 	              <button type="submit" class="btn btn-primary">Guardar cambios</button>
 	            </div>
 	            </form>
