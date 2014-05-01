@@ -13,6 +13,7 @@ else{
 }
 $usarDB = mysql_select_db($database);
 $table_Name = "estudiante"; 
+$table_Name2 = "maestro"; 
 
 // Connect to server and select databse.
 // mysql_connect("$host", "$idE", "$password")or die("cannot connect"); 
@@ -32,17 +33,20 @@ else{
 	$password = stripslashes($password);
 	$idE = mysql_real_escape_string($idE);
 	$password = mysql_real_escape_string($password);
-	$sql="SELECT * FROM $table_Name WHERE idE='$idE' and password='$password'";
+	$sql="SELECT * FROM estudiante WHERE idE='$idE' and password='$password'";
+	$sql2="SELECT * FROM maestro WHERE idM='$idE' and password='$password'";
+	
 	$result=mysql_query($sql);
-
+	$result2=mysql_query($sql2);
+	
 	// Mysql_num_row is counting table row
-	$count=mysql_num_rows($result);
-
+	$count  = mysql_num_rows($result);
+	$count2 = mysql_num_rows($result2);
 	// If result matched $idE and $password, table row must be 1 row
 	if($count==1){
 		$row = mysql_fetch_row($result);
-		if($row[1] == 0){
-			echo "baba";
+		if($row[1] == 0){ //verifica si el estudiante pagó
+			echo "Para poder ver tus notas primero debes pagar la matricula.";
 		}
 		else{
 			// Register $idE, $password and redirect to file "estudiante.php"
@@ -52,6 +56,11 @@ else{
 			$_SESSION['password'] = $password;
 			header("location:estudiante.php?idE=".$idE);
 		}
+	}
+	elseif ($count2 == 1) {
+			$_SESSION['idM'] = $idE;
+			$_SESSION['password'] = $password;
+			header("location:maestro.php?idM=".$idE);
 	}
 	else {
 		echo "Wrong idE or Password";

@@ -1,24 +1,24 @@
 <?php
 
  session_start();
-	if(!isset($_SESSION['idE']))
+	if(!isset($_SESSION['idM']))
   	{
 		header("location:index.php");
 	}
-//DATABASE CONECTION
-  $host = "localhost";
-  $usuario = "jdelacruz";
-  $password = "jjdl_cn@hotmail.com";
-  $database = "CETEC";
-  $conexion = mysql_connect($host, $usuario, $password);
-  if ($conexion){
-    echo "Coneccion realizada \n\n\n";
-  }
-  else{
-    echo "Falló coneccion \n";
-  }
-  $usarDB = mysql_select_db($database);
-  $idE = $_GET["idE"];
+	//DATABASE CONECTION
+	  $host = "localhost";
+	  $usuario = "jdelacruz";
+	  $password = "jjdl_cn@hotmail.com";
+	  $database = "CETEC";
+	  $conexion = mysql_connect($host, $usuario, $password);
+	  if ($conexion){
+	    echo "Coneccion realizada \n\n\n";
+	  }
+	  else{
+	    echo "Falló coneccion \n";
+	  }
+	  $usarDB = mysql_select_db($database);
+	  $idM = $_GET["idM"];
 ?>
 
 <html>
@@ -39,11 +39,16 @@
 				<div class="col-md-10 col-md-offset-6">
 					<a href="nada">Añadir Notas</a>	
 					&nbsp;&nbsp;&nbsp;| &nbsp;
-					<a href="index.html">Cerrar Sesión</a>				
+					<a href="logout.php">Cerrar Sesión</a>				
 				</div>
 			</div>
 
-			<h1>Nombre: DumpName</h1>
+			<h1>Nombre:  <?php 
+				$sql_nombre = "SELECT nombre From maestro Where idM=".$idM;
+  				$resultado = mysql_query($sql_nombre);
+  				$row = mysql_fetch_row($resultado);
+  				echo $row[0];
+			?></h1>
 			<h3 id="h-num">Nombre del curso actual: UnNombre</h3>
 		</div>
 
