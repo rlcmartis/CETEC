@@ -189,7 +189,7 @@ if(!isset($_SESSION['idE']))
               </tr>
               <?php
                while($row = mysql_fetch_row($resultado)){
-                    echo '<tr href="http://google.com">';
+                    echo '<tr href="http://google.com">'; // NO QUITAR XQ SE DANA TODO
                     // echo '<a href="http://ada.uprrp.edu/~jdelacruz/CETEC/estudiante.php?idE='.$row[4].'">';
                     // echo $row[4];
                     echo "<td>".'<a href="http://ada.uprrp.edu/~jdelacruz/CETEC/estudiante.php?idE='.$row[4].'">'.$row[0]."</a>"."</td>";

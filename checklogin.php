@@ -62,7 +62,7 @@ else{
 			$_SESSION['password'] = $password;
 			header("location:maestro.php?idM=".$idE);
 	}
-	else {
+	else {	
 		echo "Wrong idE or Password";
 	}
 
