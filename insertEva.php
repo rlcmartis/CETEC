@@ -81,7 +81,7 @@ session_start();
         </div>
         <div class="row">
         		<input type="hidden" name="idM" value=<?php echo $idM; ?> >
-        		<input type = "hidden" name = "nombreEva" value = <?php echo $_POST['nombreEva']; ?> >
+        		<input type = "hidden" name = "nombreEva" value = "<?php echo $_POST['nombreEva']; ?>" >
         	   <button type="submit" class="btn btn-primary">Guardar</button>
           		</form>
 
