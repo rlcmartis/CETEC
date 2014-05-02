@@ -27,8 +27,13 @@
 	while($array = mysql_fetch_array($sqleva_Result)){
 		array_push($evaluaciones, $array[0]);
 	}
-	$newEvaluaciones = (array_unique($evaluaciones)); //elimino las evaluaciones duplicadas
-	$cantidadDeEvaluaciones = sizeof($newEvaluaciones);
+
+	$evaluacionesNoDupli = (array_unique($evaluaciones)); //elimino las evaluaciones duplicadas
+	$newEvaluaciones = array();
+	$cantidadDeEvaluaciones = sizeof($evaluacionesNoDupli);
+	foreach ($evaluacionesNoDupli as $value) {
+		array_push($newEvaluaciones, $value);
+	}
 ?>
 
 <html>
@@ -47,7 +52,7 @@
 		<div class="jumbotron" id="nombre-num">
 			<div class= "row" id="lineaDeSesion"> 
 				<div class="col-md-10 col-md-offset-6">
-					<a href="nada">Añadir Notas</a>	
+					<a href= <?php echo "newEva.php?idM=$idM"; ?>>Añadir Notas</a>	
 					&nbsp;&nbsp;&nbsp;| &nbsp;
 					<a href="logout.php">Cerrar Sesión</a>				
 				</div>
