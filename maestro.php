@@ -1,39 +1,39 @@
 <?php
+  session_start();
+  if(!isset($_SESSION['idM'])){
+    header("location:index.php");
+  }
 
- session_start();
-	if(!isset($_SESSION['idM']))
-  	{
-		header("location:index.php");
-	}
-	//DATABASE CONECTION
-	$host = "localhost";
-	$usuario = "jdelacruz";
-	$password = "jjdl_cn@hotmail.com";
-	$database = "CETEC";
-	$conexion = mysql_connect($host, $usuario, $password);
-	if ($conexion){
-	  echo "Coneccion realizada \n\n\n";
-	}
-	else{
-	  echo "Falló coneccion \n";
-	}
-	$usarDB = mysql_select_db($database);
-	$idM = $_GET["idM"];
-	$semestreActual = "00A"; 
-	//sacando las evaluaciones que ha echo el profesor
-	$sqleva = 'SELECT evaluacion from evaluado where idO IN (Select idO from ofrece where idM ='.$idM.')'; 
-	$sqleva_Result = mysql_query($sqleva);
-	$evaluaciones = array();
-	while($array = mysql_fetch_array($sqleva_Result)){
-		array_push($evaluaciones, $array[0]);
-	}
+  //DATABASE CONECTION
+  $host = "localhost";
+  $usuario = "jdelacruz";
+  $password = "jjdl_cn@hotmail.com";
+  $database = "CETEC";
+  $conexion = mysql_connect($host, $usuario, $password);
+  if ($conexion){
+    echo "Conexi&oacute;n realizada \n\n\n";
+  }
+  else{
+    echo "Fall&oacute; conexi&oacute;n \n\n\n";
+  }
+  $usarDB = mysql_select_db($database);
 
-	$evaluacionesNoDupli = (array_unique($evaluaciones)); //elimino las evaluaciones duplicadas
-	$newEvaluaciones = array();
-	$cantidadDeEvaluaciones = sizeof($evaluacionesNoDupli);
-	foreach ($evaluacionesNoDupli as $value) {
-		array_push($newEvaluaciones, $value);
-	}
+  $idM = $_GET["idM"];
+  $semestreActual = "00A"; 
+  //sacando las evaluaciones que ha echo el profesor
+  $sqleva = 'Select evaluacion from evaluado where idO IN (Select idO from ofrece where idM ='.$idM.')'; 
+  $sqleva_Result = mysql_query($sqleva);
+  $evaluaciones = array();
+  while($array = mysql_fetch_array($sqleva_Result)){
+    array_push($evaluaciones, $array[0]);
+  }
+
+  $evaluacionesNoDupli = (array_unique($evaluaciones)); //elimino las evaluaciones duplicadas
+  $newEvaluaciones = array();
+  $cantidadDeEvaluaciones = sizeof($evaluacionesNoDupli);
+  foreach ($evaluacionesNoDupli as $value) {
+    array_push($newEvaluaciones, $value);
+  }
 ?>
 
 <html>

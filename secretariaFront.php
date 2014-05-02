@@ -1,28 +1,25 @@
 <?php
-session_start();
-if(!isset($_SESSION['idE']))
-    {
+  session_start();
+  if(!isset($_SESSION['idE'])){
     header("location:index.php");
   }
-  echo "Hello World";
+
+  //DATABASE CONECTION
   $host = "localhost";
   $usuario = "jdelacruz";
   $password = "jjdl_cn@hotmail.com";
   $database = "CETEC";
   $conexion = mysql_connect($host, $usuario, $password);
   if ($conexion){
-    echo "Coneccion realizada \n\n\n";
+    echo "Conexi&oacute;n realizada \n\n\n";
   }
   else{
-    echo "Falló coneccion \n";
+    echo "Fall&oacute; conexi&oacute;n \n\n\n";
   }
   $usarDB = mysql_select_db($database);
+  
   $sql_nombres = "Select * From estudiante";
   $resultado = mysql_query($sql_nombres);
-  // while($row = mysql_fetch_row($resultado)){
-  // echo $row[0];
-  // echo "<br>";
-  // }
 ?>
 
 <html>

@@ -33,8 +33,8 @@ else{
 	$password = stripslashes($password);
 	$idE = mysql_real_escape_string($idE);
 	$password = mysql_real_escape_string($password);
-	$sql="SELECT * FROM estudiante WHERE idE='$idE' and password='$password'";
-	$sql2="SELECT * FROM maestro WHERE idM='$idE' and password='$password'";
+	$sql="Select * From estudiante Where idE='$idE' and password='$password'";
+	$sql2="Select * From maestro Where idM='$idE' and password='$password'";
 	
 	$result=mysql_query($sql);
 	$result2=mysql_query($sql2);
@@ -46,7 +46,7 @@ else{
 	if($count==1){
 		$row = mysql_fetch_row($result);
 		if($row[1] == 0){ //verifica si el estudiante pagó
-			echo "Para poder ver tus notas primero debes pagar la matricula.";
+			echo "Para poder ver tus notas primero debes pagar la matr&iacute;cula.";
 		}
 		else{
 			// Register $idE, $password and redirect to file "estudiante.php"
