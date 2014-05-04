@@ -10,21 +10,23 @@
   $password = "jjdl_cn@hotmail.com";
   $database = "CETEC";
   $conexion = mysql_connect($host, $usuario, $password);
-  if ($conexion){
-    echo "Conexi&oacute;n realizada \n\n\n";
-  }
-  else{
+  if (/*$conexion*/!$conexion){
+  //   echo "Conexi&oacute;n realizada \n\n\n";
+  // }
+  // else{
     echo "Fall&oacute; conexi&oacute;n \n\n\n";
   }
-  $usarDB = mysql_select_db($database);
+  $usarDB = mysql_Select_db($database);
 
   $idM = $_GET["idM"];
   $semestreActual = "00A"; 
+
   //sacando las evaluaciones que ha echo el profesor
-  $sqleva = 'Select evaluacion from evaluado where idO IN (Select idO from ofrece where idM ='.$idM.')'; 
-  $sqleva_Result = mysql_query($sqleva);
+  $sql_idO = "Select o.idO From ofrece As o Where o.semestre='".$semestreActual."' and o.idM='".$idM."'";
+  $sql_eva = "Select e.evaluacion From evaluado As e Where e.idO IN (".$sql_idO.")";
+  $sql_eva_Result = mysql_query($sql_eva);
   $evaluaciones = array();
-  while($array = mysql_fetch_array($sqleva_Result)){
+  while($array = mysql_fetch_array($sql_eva_Result)){
     array_push($evaluaciones, $array[0]);
   }
 
@@ -34,6 +36,13 @@
   foreach ($evaluacionesNoDupli as $value) {
     array_push($newEvaluaciones, $value);
   }
+
+
+  $sql_curso = "Select c.nombre From curso As c natural join ofrece As o2 Where o2.idO In (".$sql_idO.")";
+  $sql_curso_result = mysql_query($sql_curso);
+  //se supone que si fue verificado antes, el profesor solo ofreca un curso en el actual semestre
+  $rowCurso = mysql_fetch_array($sql_curso_result);
+  $curso = $rowCurso[0];
 ?>
 
 <html>
@@ -59,12 +68,12 @@
 			</div>
 
 			<h1>Nombre:  <?php 
-				$sql_nombre = "SELECT nombre From maestro Where idM=".$idM;
+				$sql_nombre = "Select nombre From maestro Where idM=".$idM;
   				$resultado = mysql_query($sql_nombre);
-  				$row = mysql_fetch_row($resultado);
-  				echo $row[0];
+  				$rowMaestro = mysql_fetch_row($resultado);
+  				echo $rowMaestro[0];
 			?></h1>
-			<h3 id="h-num">Nombre del curso actual: UnNombre</h3>
+			<h3 id="h-num">Nombre del curso actual: <?php echo $curso ?></h3>
 		</div>
 
 		<ul class="nav nav-tabs nav-justified" id="myTab">
@@ -82,61 +91,46 @@
 						for ($i=0; $i < sizeof($newEvaluaciones); $i++) { 
 							echo "<th>".$newEvaluaciones[$i]."</th>";
 						}
-						$sqlIDgrupo1 = 	'SELECT idE 
-										from estudiante 
-									   	where Grupo = 1 and idE in 
-									   	(	SELECT idE 
-									   		FROM matriculado 
-									   		WHERE idO IN (	SELECT idO 
-									   						FROM ofrece 
-									   						WHERE idM = "'.$idM.'" and semestre = "'.$semestreActual.'"))';
+						$sqlIDgrupo1 = "Select e.idE From estudiante As e natural join matriculado as m
+						                Where e.grupo = 1 and m.idO In (".$sql_idO.")";
 						$sqlIDgrupo1Result = mysql_query($sqlIDgrupo1);
 
-						while ($row = mysql_fetch_row($sqlIDgrupo1Result)){
-							$sqlNombreGrupo1 = "SELECT nombre from estudiante where idE=$row[0]";
+						while ($row1 = mysql_fetch_row($sqlIDgrupo1Result)){
+							$sqlNombreGrupo1 = "Select e.nombre From estudiante As e Where idE=".$row1[0];
 							$sqlNombreGrupo1Result = mysql_query($sqlNombreGrupo1);
-							$rowNombre = mysql_fetch_row($sqlNombreGrupo1Result);
-							$sqlNotasGrupo1 = 'SELECT nota from evaluado where idE = "'.$row[0].'" and idE IN(
-												SELECT idE 
-												from estudiante 
-											   	where Grupo = 1 and idE in 
-											   	(	SELECT idE 
-											   		FROM matriculado 
-											   		WHERE idO IN (	SELECT idO 
-											   						FROM ofrece 
-											   						WHERE idM = "'.$idM.'" and semestre = "'.$semestreActual.'"))
-												)';
+							$rowNombre1 = mysql_fetch_row($sqlNombreGrupo1Result);
+
+							$sqlNotasGrupo1 = "Select e1.nota
+							                   From evaluado As e1 natural join matriculado As m natural join estudiante As e2
+							                   Where e2.idE = '".$row1[0]."' and e2.grupo = 1 and m.idO IN (".$sql_idO.")";
 
 							$sqlNotasGrupo1Result = mysql_query($sqlNotasGrupo1);
 
-							$notasEstudiante = array();
-
+							$notasEstudiante1 = array();
 							while ($array = mysql_fetch_row($sqlNotasGrupo1Result)) {
-								array_push($notasEstudiante, $array[0]);
+								array_push($notasEstudiante1, $array[0]);
 							}
-							echo "<tr>";
-							echo "<td>".$rowNombre[0]."</td>";
 
+							echo "<tr>";
+							echo "<td>".$rowNombre1[0]."</td>";
 							//este for me despliega las notas 
 							for ($i=0; $i < $cantidadDeEvaluaciones; $i++) { 
-								$sqlnota = 'SELECT nota from evaluado 
-											where idE = "'.$row[0].'" and evaluacion = "'.$newEvaluaciones[$i].'"';
-								$sqlnotaResult = mysql_query($sqlnota);
-								if(mysql_num_rows($sqlnotaResult) == 0){ //si sqlnota me devuelve una tabla vacia 
+								$sqlnota1 = "Select e.nota From evaluado As e
+											Where e.idE = '".$row1[0]."' and e.evaluacion = '".$newEvaluaciones[$i]."'";
+								$sqlnota1Result = mysql_query($sqlnota1);
+
+								if(mysql_num_rows($sqlnota1Result) == 0){ //si sqlnota me devuelve una tabla vacia 
 									echo "<td> </td>";					//significa que ese estudiante no tiene nota 
 																		//para esa evaluacion y por lo tanto la despliego vacia
-									
 								}
 								else{
-									$arrayNotas = mysql_fetch_array($sqlnotaResult);
-									echo "<td>".$arrayNotas[0]."</td>";
+									$arrayNotas1 = mysql_fetch_array($sqlnota1Result);
+									echo "<td>".$arrayNotas1[0]."</td>";
 								}
 							}
 							echo "</tr>";
-
 						}
 					?>
-
 	            </table>
 			</div>
 
@@ -147,48 +141,44 @@
 						for ($i=0; $i < sizeof($newEvaluaciones); $i++) { 
 							echo "<th>".$newEvaluaciones[$i]."</th>";
 						}
-						$sqlIDgrupo2 = 	'SELECT idE 
-										from estudiante 
-									   	where Grupo = 2 and idE in 
-									   	(	SELECT idE 
-									   		FROM matriculado 
-									   		WHERE idO IN (	SELECT idO 
-									   						FROM ofrece 
-									   						WHERE idM = "'.$idM.'" and semestre = "'.$semestreActual.'"))';
+						$sqlIDgrupo2 = "Select e.idE From estudiante As e natural join matriculado as m
+						                Where e.grupo = 2 and m.idO In (".$sql_idO.")";
 						$sqlIDgrupo2Result = mysql_query($sqlIDgrupo2);
+
 						while ($row2 = mysql_fetch_row($sqlIDgrupo2Result)){
-							$sqlNombreGrupo2 = "SELECT nombre from estudiante where idE=$row2[0]";
+							$sqlNombreGrupo2 = "Select e.nombre From estudiante As e Where idE=".$row2[0];
 							$sqlNombreGrupo2Result = mysql_query($sqlNombreGrupo2);
 							$rowNombre2 = mysql_fetch_row($sqlNombreGrupo2Result);
-							$sqlNotasGrupo2 = 'SELECT nota from evaluado where idE = "'.$row2[0].'" and idE IN(
-												SELECT idE 
-												from estudiante 
-											   	where Grupo = 2 and idE in 
-											   	(	SELECT idE 
-											   		FROM matriculado 
-											   		WHERE idO IN (	SELECT idO 
-											   						FROM ofrece 
-											   						WHERE idM = "'.$idM.'" and semestre = "'.$semestreActual.'"))
-												)';
-
+							
+							$sqlNotasGrupo2 = "Select e1.nota
+							                   From evaluado As e1 natural join matriculado As m natural join estudiante As e2
+							                   Where e2.idE = '".$row2[0]."' and e2.grupo = 2 and m.idO IN (".$sql_idO.")";
 							$sqlNotasGrupo2Result = mysql_query($sqlNotasGrupo2);
 
 							$notasEstudiante2 = array();
-
 							while ($array2 = mysql_fetch_row($sqlNotasGrupo2Result)) {
 								array_push($notasEstudiante2, $array2[0]);
 							}
+
 							echo "<tr>";
 							echo "<td>".$rowNombre2[0]."</td>";
-							for ($i=0; $i < $cantidadDeEvaluaciones; $i++) { 
-								echo "<td>".$notasEstudiante2[$i]."</td>";
+							for ($i=0; $i < $cantidadDeEvaluaciones; $i++) {
+								$sqlnota2 = "Select e.nota From evaluado As e
+											Where e.idE = '".$row2[0]."' and e.evaluacion = '".$newEvaluaciones[$i]."'";
+								$sqlnota2Result = mysql_query($sqlnota2);
+
+								if(mysql_num_rows($sqlnota2Result) == 0){ //si sqlnota me devuelve una tabla vacia 
+									echo "<td> </td>";					//significa que ese estudiante no tiene nota 
+																		//para esa evaluacion y por lo tanto la despliego vacia
+								}
+								else{
+									$arrayNotas2 = mysql_fetch_array($sqlnota2Result);
+									echo "<td>".$arrayNotas2[0]."</td>";
+								}
 							}
 							echo "</tr>";
-
 						}
-
 					?>
-
 	            </table>
 		</div>
 
@@ -199,47 +189,43 @@
 						for ($i=0; $i < sizeof($newEvaluaciones); $i++) { 
 							echo "<th>".$newEvaluaciones[$i]."</th>";
 						}
-						$sqlIDgrupo3 = 	'SELECT idE 
-										from estudiante 
-									   	where Grupo = 3 and idE in 
-									   	(	SELECT idE 
-									   		FROM matriculado 
-									   		WHERE idO IN (	SELECT idO 
-									   						FROM ofrece 
-									   						WHERE idM = "'.$idM.'" and semestre = "'.$semestreActual.'"))';
+						$sqlIDgrupo3 = "Select e.idE From estudiante As e natural join matriculado as m
+						                Where e.grupo = 3 and m.idO In (".$sql_idO.")";
 						$sqlIDgrupo3Result = mysql_query($sqlIDgrupo3);
+
 						while ($row3 = mysql_fetch_row($sqlIDgrupo3Result)){
-							$sqlNombreGrupo3 = "SELECT nombre from estudiante where idE=$row3[0]";
+							$sqlNombreGrupo3 = "Select e.nombre From estudiante As e Where idE=".$row3[0];
 							$sqlNombreGrupo3Result = mysql_query($sqlNombreGrupo3);
 							$rowNombre3 = mysql_fetch_row($sqlNombreGrupo3Result);
-							$sqlNotasGrupo3 = 'SELECT nota from evaluado where idE = "'.$row3[0].'" and idE IN(
-												SELECT idE 
-												from estudiante 
-											   	where Grupo = 2 and idE in 
-											   	(	SELECT idE 
-											   		FROM matriculado 
-											   		WHERE idO IN (	SELECT idO 
-											   						FROM ofrece 
-											   						WHERE idM = "'.$idM.'" and semestre = "'.$semestreActual.'"))
-												)';
 
+							$sqlNotasGrupo3 = "Select e1.nota
+							                   From evaluado As e1 natural join matriculado As m natural join estudiante As e2
+							                   Where e2.idE = '".$row3[0]."' and e2.grupo = 3 and m.idO IN (".$sql_idO.")";
 							$sqlNotasGrupo3Result = mysql_query($sqlNotasGrupo3);
 
 							$notasEstudiante3 = array();
-							
-							while ($array3 = mysql_fetch_row($sqlNotasGrupo3Result)) {
-								array_push($notasEstudiante3, $array3[0]);
+							while ($array = mysql_fetch_row($sqlNotasGrupo3Result)) {
+								array_push($notasEstudiante3, $array[0]);
 							}
 							echo "<tr>";
 							echo "<td>".$rowNombre3[0]."</td>";
-							
-							if(sizeof($notasEstudiante3) -1 > 0){
-								for ($i=0; $i < $cantidadDeEvaluaciones; $i++) { 
-									echo "<td>".$notasEstudiante3[$i]."</td>";
-								}
-								echo "</tr>";
-							}
 
+							//este for me despliega las notas 
+							for ($i=0; $i < $cantidadDeEvaluaciones; $i++) { 
+								$sqlnota3 = "Select e.nota From evaluado As e
+											Where e.idE = '".$row3[0]."' and e.evaluacion = '".$newEvaluaciones[$i]."'";
+								$sqlnota3Result = mysql_query($sqlnota3);
+
+								if(mysql_num_rows($sqlnota3Result) == 0){ //si sqlnota me devuelve una tabla vacia 
+									echo "<td> </td>";					//significa que ese estudiante no tiene nota 
+																		//para esa evaluacion y por lo tanto la despliego vacia
+								}
+								else{
+									$arrayNotas3 = mysql_fetch_array($sqlnota3Result);
+									echo "<td>".$arrayNotas3[0]."</td>";
+								}
+							}
+							echo "</tr>";
 						}
 					?>
 	            </table>
@@ -248,9 +234,6 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="../../dist/js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-    <script>
-  $(function () {
-    $('#myTab a:first').tab('show')
-  })
+    <script> $(function () {$('#myTab a:first').tab('show')}) </script>
 	</body>
 </html>
