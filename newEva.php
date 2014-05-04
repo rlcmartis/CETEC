@@ -1,23 +1,23 @@
 <?php
-session_start();
-	if(!isset($_SESSION['idM']))
-  	{
-		header("location:index.php");
-	}
-	//DATABASE CONECTION
-	$host = "localhost";
-	$usuario = "jdelacruz";
-	$password = "jjdl_cn@hotmail.com";
-	$database = "CETEC";
-	$conexion = mysql_connect($host, $usuario, $password);
-	if ($conexion){
-	  echo "Coneccion realizada \n\n\n";
-	}
-	else{
-	  echo "Falló coneccion \n";
-	}
-	$usarDB = mysql_select_db($database);
-	$idM = $_GET["idM"];
+  session_start();
+  if(!isset($_SESSION['idM'])){
+    header("location:index.php");
+  }
+
+  //DATABASE CONECTION
+  $host = "localhost";
+  $usuario = "jdelacruz";
+  $password = "jjdl_cn@hotmail.com";
+  $database = "CETEC";
+  $conexion = mysql_connect($host, $usuario, $password);
+  if (/*$conexion*/!$conexion){
+  //   echo "Conexi&oacute;n realizada \n\n\n";
+  // }
+  // else{
+    echo "Fall&oacute; conexi&oacute;n \n\n\n";
+  }
+  $usarDB = mysql_select_db($database);
+  $idM = $_GET["idM"];
 ?>
 
 <html>

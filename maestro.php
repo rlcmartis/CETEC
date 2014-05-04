@@ -19,7 +19,12 @@
   $usarDB = mysql_Select_db($database);
 
   $idM = $_GET["idM"];
-  $semestreActual = "00A"; 
+
+  date_default_timezone_set('America/Anguilla');
+  $year = date('Y', time());
+  $month = intval(date('m', time()));
+  if ($month < 7) {$semestreActual = $year[2].$year[3]."B";}
+  else{$semestreActual = $year[2].$year[3]."A";} 
 
   //sacando las evaluaciones que ha echo el profesor
   $sql_idO = "Select o.idO From ofrece As o Where o.semestre='".$semestreActual."' and o.idM='".$idM."'";
@@ -62,6 +67,8 @@
 			<div class= "row" id="lineaDeSesion"> 
 				<div class="col-md-10 col-md-offset-6">
 					<a href= <?php echo "newEva.php?idM=$idM"; ?>>Añadir Notas</a>	
+					&nbsp;&nbsp;&nbsp;| &nbsp;
+					<a href= <?php echo "editarEva.php?idM=$idM"; ?>>Editar Notas</a>	
 					&nbsp;&nbsp;&nbsp;| &nbsp;
 					<a href="logout.php">Cerrar Sesión</a>				
 				</div>

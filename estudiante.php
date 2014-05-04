@@ -19,7 +19,12 @@
   $usarDB = mysql_select_db($database);
 
   $idE = $_GET["idE"];
-  $semestreActual = "00A";
+  
+  date_default_timezone_set('America/Anguilla');
+  $year = date('Y', time());
+  $month = intval(date('m', time()));
+  if ($month < 7) {$semestreActual = $year[2].$year[3]."B";}
+  else{$semestreActual = $year[2].$year[3]."A";}
 
   $sql_nombre = "Select nombre From estudiante Where idE=".$idE;
   $resultadoNombre = mysql_query($sql_nombre);
@@ -184,9 +189,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="../../dist/js/bootstrap.min.js"></script>
 	  <script src="js/bootstrap.js"></script>
-    <script>
-      $(function () {
-        $('#myTab a:first').tab('show')
-      })</script>
+    <script> $(function () {$('#myTab a:first').tab('show')})</script>
 	</body>
 </html>

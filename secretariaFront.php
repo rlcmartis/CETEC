@@ -10,10 +10,10 @@
   $password = "jjdl_cn@hotmail.com";
   $database = "CETEC";
   $conexion = mysql_connect($host, $usuario, $password);
-  if ($conexion){
-    echo "Conexi&oacute;n realizada \n\n\n";
-  }
-  else{
+  if (/*$conexion*/!$conexion){
+  //   echo "Conexi&oacute;n realizada \n\n\n";
+  // }
+  // else{
     echo "Fall&oacute; conexi&oacute;n \n\n\n";
   }
   $usarDB = mysql_select_db($database);

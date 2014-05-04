@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CETEC LogIn</title>
 
-     <link href="css/bootstrap.css" rel="stylesheet">
-     <link href="css/cetec.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/cetec.css" rel="stylesheet">
   </head>
   <body background="https://github.com/rlcmartis/CETEC/blob/master/CETEC_back_login.jpg?raw=true"> 
     <div class="container" id="login">
@@ -20,8 +20,8 @@
           <div class="btn-group">
             <button type="submit" class="btn btn-info" >Log in</button>
           </div>
-       </div>
-     </form>
+        </div>
+      </form>
     </div>
   </body>
 </html>
