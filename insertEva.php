@@ -17,7 +17,7 @@ session_start();
     echo "Fall&oacute; conexi&oacute;n \n\n\n";
   }
 	$usarDB = mysql_select_db($database);
-	$idM = $_GET["idM"];
+	$idM = $_POST["idM"];
   $evaluacionUrl = $_GET["eval"];
   $evaluacion = str_replace("_", " ", $evaluacionUrl);
   
