@@ -17,7 +17,7 @@
     echo "Fall&oacute; conexi&oacute;n \n\n\n";
   }
   $usarDB = mysql_select_db($database);
-  $idM = $_GET["idM"];
+  $idM = $_POST["idM"];
 ?>
 
 <html>
@@ -26,7 +26,7 @@
 			<form class="form-signin" method="post" action="editarEva.php">
 	                  <!-- Nombre box -->
 	                  <div class="row" id="input-pass">
-	                    <input type="text" class="form-control" name="nombreEva" placeholder="Nombre">
+	                    <input type="text" class="form-control" name="eval" placeholder="Nombre">
 	                  </div>
 
 	                  <!-- Fecha de Admision box -->
@@ -34,9 +34,9 @@
 	                    <input type="text" class="form-control" name="fechaEva" placeholder="Fecha de Evaluacion">
 	                  </div>
 
-	                  <a href=<?php echo "maestro.php?idM=$idM"; ?> >
-	                  	<button type="button" class="btn btn-danger" >Cancelar</button>
-	                  </a>
+	                  <input type="hidden" name = "idM" value = <?php echo "$idM"; ?> >
+	                  <button formaction = "maestro.php" type="submit" class="btn btn-danger" >Cancelar</button>
+
 	                  <input type="hidden" name = "idM" value = <?php echo "$idM"; ?> >
 	              	  <button type="submit" class="btn btn-primary">Guardar cambios</button>
 	            </form>

@@ -65,7 +65,13 @@
 		<div class="jumbotron" id="nombre-num">
 			<div class= "row" id="lineaDeSesion"> 
 				<div class="col-md-10 col-md-offset-6">
-					<a href= <?php echo "newEva.php?idM=$idM"; ?>>Añadir Notas</a>	
+					<form action = "newEva.php" method = "post">
+						<input type = "hidden" name = "idM" = value = <?php echo '"'.$idM.'"'?>>
+						<button type="submit" class="btn btn-info">
+        					Añadir Notas
+      					</button>
+					</form>
+					
 					&nbsp;&nbsp;&nbsp;| &nbsp;
 					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalN">
         				Editar Notas
