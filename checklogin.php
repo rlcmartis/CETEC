@@ -25,6 +25,7 @@
   $password=$_POST['password']; 
   if ($idE == "admin" and $password == "admin"){
     $_SESSION['idE'] = $idE;
+    $_SESSION['idM'] = $idE;
     $_SESSION['password'] = $password;
     header("location:secretariaFront.php");
   }

@@ -4,6 +4,10 @@
     header("location:index.php");
   }
 
+  if(!isset($_SESSION['idM'])){
+    header("location:index.php");
+  }
+
   //DATABASE CONECTION
   $host = "localhost";
   $usuario = "jdelacruz";

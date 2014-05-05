@@ -23,7 +23,7 @@
 <html>
 	<body>
 		<div class="container">
-			<form class="form-signin" method="post" action="insertEva.php">
+			<form class="form-signin" method="post" action="editarEva.php">
 	                  <!-- Nombre box -->
 	                  <div class="row" id="input-pass">
 	                    <input type="text" class="form-control" name="nombreEva" placeholder="Nombre">
