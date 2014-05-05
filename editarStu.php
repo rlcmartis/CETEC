@@ -21,8 +21,18 @@
 ?>
 
 <html>
+<head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="css/bootstrap.css" rel="stylesheet">
+      <link href="css/bootstrap.min.css" rel="stylesheet">
+      <link href="css/cetec.css" rel="stylesheet">
+
+    <title>Editar Estudiante</title>
+  </head>
 	<body>
-		<div class="container">
+		<div class="container" id="editCont">
 			<form class="form-signin" method="post" action="insertStu.php">
 				<!-- Nombre box -->
 				<div class="row" id="input-pass">
@@ -44,6 +54,9 @@
 					<input type="text" class="form-control" name="idE" value="<?php echo $row[4]; ?>">
 				</div>
 
+				<div class="row" id="input-pass">
+					<input type="text" class="form-control" name="password" value="<?php echo $row[5]; ?>">
+				</div>
 				<!-- checkbox row -->
 				<div class="row" id="input-pass">
 					<label id="Pago">

@@ -20,6 +20,12 @@
   
   $sql_nombres = "Select * From estudiante";
   $resultado = mysql_query($sql_nombres);
+
+  $sql_cursos = "SELECT * FROM curso";
+  $resultado_cursos = mysql_query($sql_cursos);
+
+  $sql_maestros = "SELECT * FROM maestro";
+  $resultado_maestros = mysql_query($sql_maestros);
 ?>
 
 <html>
@@ -35,6 +41,14 @@
   </head>
   <body>
 
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <p class="navbar-brand">
+          CETEC
+        </p>
+        <p class="navbar-text pull-right">
+            <a href="logout.php">Cerrar Sesión</a>   
+        </p>
+    </nav>
     <!-- Modal Estudiantes-->
       <div class="modal fade" id="myModalE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -76,7 +90,7 @@
                       <option>Grupo 1</option>
                       <option>Grupo 2</option>
                       <option>Grupo 3</option>
-                   </select>
+                    </select>
                   </div>
             </div>
             <div class="modal-footer">
@@ -97,22 +111,23 @@
               <h3 class="modal-title" id="myModalLabel">Añadir Curso</h3>
             </div>
             <div class="modal-body">
-               <form class="form-signin">
+               <form class="form-signin" method="post" action="insertCu.php">
                   <!-- Nombre box -->
-                  <div class="row" id="input-pass" >
-                    <input type="text" class="form-control" placeholder="Nombre del Curso">
+                  <div class="row" id="input-pass">
+                    <input type="text" class="form-control" placeholder="Nombre del Curso" name="nombreC">
                   </div>
 
-                  <!-- Fecha de Admision box -->
+                  <!-- Fecha de Graduación box -->
                   <div class="row" id="input-pass"> 
-                    <input type="text" class="form-control" placeholder="Código del Curso">
+                    <input type="text" class="form-control" placeholder="Codigo del Curso" name="idC">
                   </div>
-               </form>
+
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary">Aceptar</button>
+              <button type="submit" class="btn btn-primary">Aceptar</button>
             </div>
+            </form>
           </div>
         </div>
       </div>
@@ -128,38 +143,43 @@
               <h3 class="modal-title" id="myModalLabel">Añadir Maestro</h3>
             </div>
             <div class="modal-body">
-               <form class="form-signin">
+               <form class="form-signin" method="post" action="insertMae.php">
                   <!-- Nombre box -->
-                  <div class="row" id="input-pass" >
-                    <input type="text" class="form-control" placeholder="Nombre del Maestro">
-                  </div>
-
-                  <!-- Fecha de Admision box -->
-                  <div class="row" id="input-pass"> 
-                    <input type="text" class="form-control" placeholder="Curso Actual">
+                  <div class="row" id="input-pass">
+                    <input type="text" class="form-control" placeholder="Nombre del Maestro" name="nombreM">
                   </div>
 
                   <!-- Fecha de Graduación box -->
                   <div class="row" id="input-pass"> 
-                    <input type="text" class="form-control" placeholder="Identificación del Maestro">
+                    <input type="text" class="form-control" placeholder="Identificación del Maestro" name="idM">
                   </div>
-               </form>
+
+                  <div class="row" id="input-pass"> 
+                    <select class="selectpicker" name="curso">
+                        <?php 
+                          $sql_Cursos_sinM = "SELECT idC FROM curso WHERE idC NOT IN (SELECT idC FROM ofrece)";
+                          $sql_Cursos_sinM_result = mysql_query($sql_Cursos_sinM);
+                          while ($rowCursos = mysql_fetch_row($sql_Cursos_sinM_result)) {
+                            $sqlBuscaNombre = 'SELECT nombre FROM curso WHERE idC="'.$rowCursos[0].'"';
+                            $sqlBuscaNombre_result = mysql_query($sqlBuscaNombre);
+                            $sqlBuscaNombre_result_row = mysql_fetch_row($sqlBuscaNombre_result);
+                            echo '<option value="'.$rowCursos[0].'">'.$sqlBuscaNombre_result_row[0].'</option>';
+                          }
+                        ?>
+                    </select>
+                  </div>
+
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary">Aceptar</button>
+              <button type="submit" class="btn btn-primary">Aceptar</button>
             </div>
+            </form>
           </div>
         </div>
       </div>
 
-
     <div class="jumbotron" id="nombre-num">
-      <div class= "row" id="lineaDeSesion"> 
-        <div class="col-md-11 col-md-offset-6">
-          <a href="logout.php">Cerrar Sesión</a>        
-        </div>
-      </div>
       <h1>Registros</h1>
     </div>
     
@@ -175,13 +195,13 @@
       <div class="tab-pane active" id ="estudiantes">
         <div class="row">
           <div class="col-md-8">
-            <table style="width:700px">
+            <table class = "table table-hover table-condensed">
               <tr>
                 <th>Nombre</th>
                 <th>Pagó</th>
-                <th>Entró</th>
-                <th>Sale</th>
-                <th>IdE</th>
+                <th style="text-align: center">Entró</th>
+                <th style="text-align: center">Sale</th>
+                <th style="text-align: center">IdE</th>
                 <th>Grupo<th>
               </tr>
               <?php
@@ -200,7 +220,7 @@
                     echo "<td>".$row[2]."</td>";
                     echo "<td>".$row[3]."</td>";
                     echo "<td>".$row[4]."</td>";
-                    echo "<td>".$row[6]."</td>";
+                    echo '<td style="text-align: center">'.$row[6]."</td>";
                     // echo "</a>";
                     // foreach ($row as $key => $value) {
                     //   echo "<td>".$value."</td>";
@@ -258,22 +278,93 @@
     <div class="tab-pane" id="cursos">
       <div class="row">
           <div class="col-md-8">
-            Hellooooooooo
+           <table class = "table table-hover table-condensed">
+              <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+              </tr>
+              <?php
+               while($row = mysql_fetch_row($resultado_cursos)){
+                    echo '<tr href="http://google.com">'; // NO QUITAR XQ SE DANA TODO
+                    // echo '<a href="http://ada.uprrp.edu/~jdelacruz/CETEC/estudiante.php?idE='.$row[4].'">';
+                    // echo $row[4];
+                    echo "<td>".'<a href="http://ada.uprrp.edu/~jdelacruz/CETEC/curso.php?idC='.$row[0].'">'.$row[0]."</a>"."</td>";
+                    
+                    echo "<td>".$row[1]."</td>";
+                    echo "<td>";
+                    ?>
+                    <form action="editarCu.php" method="post">
+                      <input type="hidden" name="idC" value="<?php echo $row[0]; ?>">
+                      <button type="submit" class="btn btn-info"> Editar </button>
+                    </form>
+                    <?php
+                      echo "</td>";
+                      echo "<td>";
+                    ?>
+                    <form action='deleteCu.php' method="post">
+                      <input type="hidden" name="idC" value="<?php echo $row[0]; ?>">
+                      <button type="submit" class="btn btn-danger"> Borrar </button>
+                    </form>
+              <?php
+              echo "</td>";
+                }
+              ?>
+            </table>
           </div>
-        <div class="col-md-2 col-md-offset-2">
+
+          <div class="col-md-2 col-md-offset-2">
+            <div class="btn-group" id="botonC">
+              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalC">
+                Añadir Curso
+              </button>
+            </div>
+          </div>
+
+        <!-- <div class="col-md-2 col-md-offset-2">
 
           <div class="btn-group" id="botonC">
             <a data-toggle="modal" href="#myModalC" class="btn btn-info">Añadir Curso</a>
-            <!-- <button type="button" class="btn btn-info" data-target="#myModalC">Añadir Curso</button> -->
+            <button type="button" class="btn btn-info" data-target="#myModalC">Añadir Curso</button>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- Tab Maestros -->
     <div class="tab-pane" id="maestros">
       <div class="row">
         <div class="col-md-8">
-          HOLAAAAAAAA
+          <table class = "table table-hover table-condensed">
+              <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+              </tr>
+              <?php
+               while($row = mysql_fetch_row($resultado_maestros)){
+                    echo '<tr href="http://google.com">'; // NO QUITAR XQ SE DANA TODO
+                    // echo '<a href="http://ada.uprrp.edu/~jdelacruz/CETEC/estudiante.php?idE='.$row[4].'">';
+                    // echo $row[4];
+                    echo "<td>".'<a href="http://ada.uprrp.edu/~jdelacruz/CETEC/maestro.php?idM='.$row[0].'">'.$row[0]."</a>"."</td>";
+                    
+                    echo "<td>".$row[1]."</td>";
+                    echo "<td>";
+                    ?>
+                    <form action="editarMae.php" method="post">
+                      <input type="hidden" name="idM" value="<?php echo $row[0]; ?>">
+                      <button type="submit" class="btn btn-info"> Editar </button>
+                    </form>
+                    <?php
+                      echo "</td>";
+                      echo "<td>";
+                    ?>
+                    <form action='deleteMae.php' method="post">
+                      <input type="hidden" name="idM" value="<?php echo $row[0]; ?>">
+                      <button type="submit" class="btn btn-danger"> Borrar </button>
+                    </form>
+              <?php
+              echo "</td>";
+                }
+              ?>
+            </table>
         </div>
         <div class="col-md-2 col-md-offset-2">
           <div class="btn-group" id="botonM">
