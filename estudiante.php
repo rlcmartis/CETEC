@@ -17,8 +17,14 @@
     echo "Fall&oacute; conexi&oacute;n \n\n\n";
   }
   $usarDB = mysql_select_db($database);
-
-  $idE = $_SESSION['idE'];
+  $lastPage = explode('/', $_SERVER['HTTP_REFERER']);
+  if($lastPage[sizeof($lastPage)-1] == "secretariaFront.php"){
+    $idE = $_GET['idE'];
+  }
+  elseif($lastPage[sizeof($lastPage)-1] == "index.php"){
+    $idE = $_SESSION['idE'];
+  }
+  // $idE = $_SESSION['idE'];
   
   date_default_timezone_set('America/Anguilla');
   $year = date('Y', time());
@@ -31,6 +37,9 @@
   $rowNombre = mysql_fetch_row($resultadoNombre);
   $estuNombre = $rowNombre[0];
 
+  $sql_password = 'Select password From estudiante Where idE="'.$idE.'"';
+  $resultadoPassword = mysql_query($sql_password);
+  $rowPassword = mysql_fetch_row($resultadoPassword);
 
   $sql_idO = "Select o1.idO From ofrece As o1 natural join matriculado As m1
   	          Where o1.semestre='".$semestreActual."' and m1.idE='".$idE."'";
@@ -119,15 +128,49 @@
 		<title>Estudiante</title>
 	</head>
 	<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <p class="navbar-brand">
+          CETEC
+        </p>
+        <p class="navbar-text pull-right">
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalContra">
+                Editar Contraseña
+            </button>
+             <a href="logout.php"><button type="button" class="btn btn-danger">
+                  Cerrar Sesión
+              </button></a>   
+        </p>
+    </nav>
+
 		<div class="jumbotron" id="nombre-num">
-			<div class= "row" id="lineaDeSesion"> 
-				<div class="col-md-11 col-md-offset-6">
-					<a href="logout.php">Cerrar Sesión</a>				
-				</div>
-			</div>
 			<h1>Nombre: <?php echo $estuNombre ?></h1>
 			<h3 id="h-num">Numero de estudiante: <?php echo $idE; ?></h3>
 		</div>
+
+      <!-- Modal Editar Contra-->
+      <div class="modal fade" id="myModalContra" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h3 class="modal-title" id="myModalLabel">Editar Contraseña</h3>
+            </div>
+            <div class="modal-body">
+              <form class="form-signin" method="post" action="editarCont.php">
+                <div class="row" id="input-pass">
+                  <input type="text" class="form-control" name="password" value="<?php echo $rowPassword[0]; ?>">
+                </div>
+            </div>
+            <div class="modal-footer">
+              <input type="hidden" class="form-control" name = "idE" value = <?php echo '"'.$idE.'"' ?>>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Aceptar</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
 		
 		<ul class="nav nav-tabs nav-justified" id="myTab">
 		  <li class="active"><a href="#curso1" data-toggle="tab"> <?php echo $curso1 ?> </a></li>
@@ -139,7 +182,6 @@
 		<div class="tab-content" >
 			<div class="tab-pane active" id ="curso1">
 				<table class="table">
-				<thead colspan="3" >Evaluaciones</thead>
 				<tbody>
             <?php
               for ($i=0; $i < sizeof($evaluacionesC1b)-1; $i++) { 
@@ -157,7 +199,6 @@
 
 		  <div class="tab-pane" id="curso2">
         <table class="table">
-          <thead colspan="3" >Evaluaciones</thead>
           <tbody>
             <?php
               for ($i=0; $i < sizeof($evaluacionesC2b)-1; $i++) { 
@@ -175,7 +216,6 @@
 
 		  <div class="tab-pane" id="curso3">
         <table class="table">
-          <thead colspan="3">Evaluaciones</thead>
           <tbody>
             <?php
               for ($i=0; $i < sizeof($evaluacionesC3b)-1; $i++) { 

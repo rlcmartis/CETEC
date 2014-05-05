@@ -53,6 +53,10 @@
   //se supone que si fue verificado antes, el profesor solo ofreca un curso en el actual semestre
   $rowCurso = mysql_fetch_array($sql_curso_result);
   $curso = $rowCurso[0];
+
+  $sql_password = 'Select password From maestro Where idM="'.$idM.'"';
+  $resultadoPassword = mysql_query($sql_password);
+  $rowPassword = mysql_fetch_row($resultadoPassword);
 ?>
 
 <html>
@@ -86,7 +90,9 @@
 	        	else{
 	        ?>
 	        <p class="navbar-text pull-right">
-	        	
+	        	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalContra">
+                Editar Contraseña
+            	</button>
 	        	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalNewE">
         				Añadir Notas
       			</button>
@@ -176,7 +182,7 @@
       </div>
 
 
-      <!-- Modal editar notas-->
+      <!-- Modal Nueva Evaluacion-->
       <div class="modal fade" id="myModalNewE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -194,6 +200,30 @@
 	                  <div class="row" id="input-pass"> 
 	                    <input type="text" class="form-control" name="fechaEva" placeholder="Fecha de Evaluacion">
 	                  </div>
+            </div>
+            <div class="modal-footer">
+              <input type="hidden" class="form-control" name = "idM" value = <?php echo '"'.$idM.'"' ?>>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Aceptar</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Editar Contra-->
+      <div class="modal fade" id="myModalContra" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h3 class="modal-title" id="myModalLabel">Editar Contraseña</h3>
+            </div>
+            <div class="modal-body">
+              <form class="form-signin" method="post" action="editarCont.php">
+                <div class="row" id="input-pass">
+                  <input type="text" class="form-control" name="password" value="<?php echo $rowPassword[0]; ?>">
+                </div>
             </div>
             <div class="modal-footer">
               <input type="hidden" class="form-control" name = "idM" value = <?php echo '"'.$idM.'"' ?>>

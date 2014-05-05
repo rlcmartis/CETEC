@@ -50,7 +50,9 @@
           CETEC
         </p>
         <p class="navbar-text pull-right">
-            <a href="logout.php">Cerrar Sesión</a>   
+             <a href="logout.php"><button type="button" class="btn btn-danger">
+                  Cerrar Sesión
+              </button></a>   
         </p>
     </nav>
     <!-- Modal Estudiantes-->
