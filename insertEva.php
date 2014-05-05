@@ -17,73 +17,44 @@ session_start();
     echo "Fall&oacute; conexi&oacute;n \n\n\n";
   }
 	$usarDB = mysql_select_db($database);
-	$idM = $_POST["idM"];
+	$idM = $_GET["idM"];
+  $evaluacionUrl = $_GET["eval"];
+  $evaluacion = str_replace("_", " ", $evaluacionUrl);
   
   date_default_timezone_set('America/Anguilla');
   $year = date('Y', time());
   $month = intval(date('m', time()));
   if ($month < 7) {$semestreActual = $year[2].$year[3]."B";}
   else{$semestreActual = $year[2].$year[3]."A";}
-?>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/cetec.css" rel="stylesheet">
 
-    <title>SecretariaFront</title>
-  </head>
-  <body>
-    <div class="row">
-      <form class="form-signin" method="post" action="insertNota.php">
-        <div class="col-md-8">
-          <table style="width:700px">
-            <tr>
-              <th>Nombre del estudiante</th>
-              <th>Nota</th>
-            </tr>
-            <?php
-             	$sqlIDgrupo1 = 	"Select idE From estudiante Where Grupo = 1 and idE In 
-		                            (Select idE From matriculado Where idO In 
-								  	               (Select idO From ofrece Where idM = '".$idM."' and semestre = '".$semestreActual."'))";
-				      $sqlIDgrupo1Result = mysql_query($sqlIDgrupo1);
-				      $count = mysql_num_rows($sqlIDgrupo1Result);
-				
-              for ($i=0; $i < $count; $i++) { 
-                $row = mysql_fetch_row($sqlIDgrupo1Result);
-                $sqlNombreGrupo1 = "Select nombre From estudiante Where idE=".$row[0];
-                $sqlNombreGrupo1Result = mysql_query($sqlNombreGrupo1);
-                $rowNombre = mysql_fetch_row($sqlNombreGrupo1Result);
-					      echo "<tr>";
-					      echo "<td>".$rowNombre[0]."</td>";
-					      echo "<td>";
-            ?>
-				    <!-- Nota box -->
-					  <input type="hidden" name = <?php echo "idE$i"; ?> value = <?php echo "$row[0]"; ?>>
-	          <input type="text" class="form-control" name= <?php echo "nota$i"; ?> placeholder="Nota">
-            <?php
-	          	echo "</td>";
-              echo "</tr>";
-              }
-            ?>
-          </table>
-        </div>
-                 <!-- <div class="col-md-2 col-md-offset-2">
-            <div class="btn-group" id="botonE">
-              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalE">
-                Añadir Estudiante
-              </button>
-            </div>
-          </div> -->
-      </div>
-      <div class="row">
-        <input type="hidden" name="idM" value=<?php echo $idM; ?> >
-        <input type = "hidden" name = "nombreEva" value = "<?php echo $_POST['nombreEva']; ?>" >
-        <button type="submit" class="btn btn-primary">Guardar</button>
-      </form>
-    </div>
-  </body>
-</html>
+  $sql_idO = "Select o.idO From ofrece As o Where o.semestre='".$semestreActual."' and o.idM='".$idM."'";
+  $idOResult = mysql_query($sql_idO);
+  $idO = mysql_fetch_row($idOResult);
+
+  $sql_ests = "Select e.idE From estudiante As e Natural Join matriculado As m Where m.idO In (".$sql_idO.")";
+  $ests_result = mysql_query($sql_ests);
+  $cantidadEstudiantes = mysql_num_rows($ests_result);
+
+  for ($id=0; $id < $cantidadEstudiantes ; $id++) { 
+    $casilla = $_POST[$id];
+    $row = mysql_fetch_row($ests_result);
+    $idE = $row[0];
+
+    $sql_verifica = "Select * From evaluado Where idE='".$idE."' and evaluacion='".$evaluacion."' and idO In (".$sql_idO.")";
+    $veriResult = mysql_query($sql_verifica);
+    echo($veriResult);
+    if(mysql_num_rows($veriResult) > 0){
+      $sql_update =  "Update evaluado Set nota='".$casilla."'
+                      Where idE='".$idE."' and evaluacion='".$evaluacion."' and idO In (".$sql_idO.")";
+      echo $sql_update;
+      $result = mysql_query($sql_update);
+    }
+    else{
+      $sql_insert =  "Insert Into evaluado (nota, idE, evaluacion, idO)
+                      Values ('".$casilla."', '".$idE."', '".$evaluacion."', ".$idO[0].")";
+      echo $sql_insert;
+      $resulta = mysql_query($sql_insert);
+    }
+  }
+  header("location:maestro.php?idM=".$idM);
+?>

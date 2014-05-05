@@ -68,8 +68,10 @@
 				<div class="col-md-10 col-md-offset-6">
 					<a href= <?php echo "newEva.php?idM=$idM"; ?>>Añadir Notas</a>	
 					&nbsp;&nbsp;&nbsp;| &nbsp;
-					<a href= <?php echo "editarEva.php?idM=$idM"; ?>>Editar Notas</a>	
-					&nbsp;&nbsp;&nbsp;| &nbsp;
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalN">
+        				Editar Notas
+      				</button>
+      				&nbsp;&nbsp;&nbsp;| &nbsp;
 					<a href="logout.php">Cerrar Sesión</a>				
 				</div>
 			</div>
@@ -82,6 +84,48 @@
 			?></h1>
 			<h3 id="h-num">Nombre del curso actual: <?php echo $curso ?></h3>
 		</div>
+
+	  <!-- Modal editar notas-->
+      <div class="modal fade" id="myModalN" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h3 class="modal-title" id="myModalLabel">Editar evaluación</h3>
+            </div>
+            <div class="modal-body">
+              <form class="form-signin" method="post" action="insertStu.php">
+
+                <div class="navbar">
+                  <div class="navbar-inner">
+                    <ul class="nav">
+                      <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                          Seleccionar evaluaci&oacute;n
+                          <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <?php
+                            for ($ev=0; $ev < $cantidadDeEvaluaciones ; $ev++){
+                              $editEval = $newEvaluaciones[$ev];
+                              echo '<li><a href="editarEva.php?eval='.$editEval.'&idM='.$idM.'">'.$editEval.'</a></li>';
+                            }
+                          ?>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+            </div>
+<!--             <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Aceptar</button>
+            </div> -->
+            </form>
+          </div>
+        </div>
+      </div>
 
 		<ul class="nav nav-tabs nav-justified" id="myTab">
 		  <li class="active"><a href="#grupo1" data-toggle="tab">Grupo 1</a></li>

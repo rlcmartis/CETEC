@@ -20,33 +20,34 @@
   $idE = $_POST['idE'];
 
   if(isset($_POST['grupo'])){
-	if ($_POST['grupo'] == "Grupo 1") {
+	  if ($_POST['grupo'] == "Grupo 1") {
       $grupo = 1;
     }
-	elseif ($_POST['grupo'] == "Grupo 2") {
-	  $grupo = 2;
-	}
-	else{
-	  $grupo = 3;
-	}
+	  elseif ($_POST['grupo'] == "Grupo 2") {
+	    $grupo = 2;
+	  }
+	  else{
+	    $grupo = 3;
+	  }
 
-	if (isset($_POST['pago'])) {
-	  $pago = 1;
-	}
-	else {
+	  if (isset($_POST['pago'])) {
+	    $pago = 1;
+	  }
+	  else {
       $pago = 0;
-	}
+  	}
   }
   else{
     $grupo = 0;
   }
+  
   $sqlVerifica = 'Select * From estudiante Where idE ="'.$idE.'"';
   $resultado = mysql_query($sqlVerifica);
 
   if(mysql_num_rows($resultado) > 0){
 	$sql_update =  'Update estudiante 
 					Set nombre="'.$nombre.'", pago='.$pago.', entro="'.$fechaA.'", 
-					    sale="'.$fechaG.'", idE="'.$idE.'", Grupo = '.$grupo.'
+					    sale="'.$fechaG.'", idE="'.$idE.'", grupo = '.$grupo.'
 					Where idE='.$idE;
 	$result = mysql_query($sql_update);
 	header("location:secretariaFront.php");
