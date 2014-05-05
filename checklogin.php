@@ -62,7 +62,7 @@
   elseif ($count2 == 1) {
     $_SESSION['idM'] = $idE;
     $_SESSION['password'] = $password;
-    header("location:maestro.php?idM=".$idE);
+    header("location:maestro.php");
   }
   else {	
     echo "Wrong idE or Password";

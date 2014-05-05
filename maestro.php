@@ -18,8 +18,7 @@
   }
   $usarDB = mysql_Select_db($database);
 
-  $idM = $_GET["idM"];
-
+  $idM = $_SESSION['idM'];
   date_default_timezone_set('America/Anguilla');
   $year = date('Y', time());
   $month = intval(date('m', time()));
