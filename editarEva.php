@@ -76,6 +76,9 @@
         <button type="submit" class="btn btn-primary">Guardar cambios</button>
 
       </form>
+      <form action= <?php echo '"deleteEva.php?eval='.$evalUrl.'&idM='.$idM.'"' ?> method="post">
+        <button type="submit" class="btn btn-danger"> Borrar </button>
+      </form>
     </table>
   </body>
 

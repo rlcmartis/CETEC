@@ -18,5 +18,5 @@
   
   $sql_deleteE = 'Delete From estudiante Where idE="'.$idE.'"';
   $result = mysql_query($sql_deleteE);
-  header("location:secretariaFront.php")
+  header("location:secretariaFront.php");
 ?>
