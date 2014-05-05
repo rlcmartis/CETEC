@@ -22,7 +22,7 @@
   $usarDB = mysql_Select_db($database);
 
   // $lastPage = explode('/', $_SERVER['HTTP_REFERER']);
-  if($_SESSION['is_admin']){
+  if(isset($_SESSION['is_admin'])){
   	$idM = $_GET['idM'];
   }
   elseif($_SESSION['is_prof']){
@@ -110,7 +110,7 @@
 	        	}
 	        ?>
 	    </nav>
-		<div style = "margin-top: 25" class="jumbotron" id="nombre-num">
+		<div class="jumbotron" id="nombre-num">
 		<!-- 	<div class= "row" id="lineaDeSesion"> 
 				<div class="col-md-10 col-md-offset-6">
 					<form action = "newEva.php" method = "post">

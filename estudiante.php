@@ -1,6 +1,9 @@
 <?php
   session_start();
-  if(!isset($_SESSION['idE'])){
+  // if(!isset($_SESSION['idE'])){
+  //   header("location:index.php");
+  // }
+  if (!$_SESSION['is_estu']) {
     header("location:index.php");
   }
 
@@ -17,11 +20,10 @@
     echo "Fall&oacute; conexi&oacute;n \n\n\n";
   }
   $usarDB = mysql_select_db($database);
-  $lastPage = explode('/', $_SERVER['HTTP_REFERER']);
-  if($lastPage[sizeof($lastPage)-1] == "secretariaFront.php"){
+  if(isset($_SESSION['is_admin'])){
     $idE = $_GET['idE'];
   }
-  elseif($lastPage[sizeof($lastPage)-1] == "index.php"){
+  elseif($_SESSION['is_estu']){
     $idE = $_SESSION['idE'];
   }
   // $idE = $_SESSION['idE'];
