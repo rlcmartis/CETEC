@@ -18,7 +18,7 @@
   }
   $usarDB = mysql_select_db($database);
 
-  $idE = $_GET["idE"];
+  $idE = $_SESSION['idE'];
   
   date_default_timezone_set('America/Anguilla');
   $year = date('Y', time());

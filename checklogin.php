@@ -56,7 +56,7 @@
 	    // session_register("password"); 
         $_SESSION['idE'] = $idE;
         $_SESSION['password'] = $password;
-        header("location:estudiante.php?idE=".$idE);
+        header("location:estudiante.php");
       }
     }
   elseif ($count2 == 1) {
