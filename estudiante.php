@@ -94,8 +94,14 @@
     }
 
   }
+  elseif (mysql_num_rows($cursosResult) == 2){
+
+  }
+  elseif (mysql_num_rows($cursosResult) == 1){
+
+  }
   else{
-  	$curso1 = "Error: Student without exactly three courses.";
+  	$curso1 = "Error: No est&acute;";
     $curso2 = "Error: Student without exactly three courses.";
     $curso3 = "Error: Student without exactly three courses.";
   }

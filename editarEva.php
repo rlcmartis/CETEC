@@ -1,6 +1,6 @@
 <?php
   session_start();
-  if(!isset($_SESSION['idE'])){
+  if(!isset($_SESSION['idM'])){
     header("location:index.php");
   }
 
@@ -18,8 +18,8 @@
   }
   $usarDB = mysql_select_db($database);
   
-  $idM = $_GET["idM"];
-  $evaluacion = $_GET["eval"];
+  $idM = $_POST["idM"];
+  $evaluacion = $_POST["eval"];
   date_default_timezone_set('America/Anguilla');
   $year = date('Y', time());
   $month = intval(date('m', time()));
@@ -51,7 +51,7 @@
   </head>
   <body>
     <table>
-      <form class="form-signin" method="post" action= <?php echo "insertEva.php?eval=".$evalUrl."&idM=".$idM ?>>
+      <form class="form-signin" method="post" action= "insertEva.php" >
         <?php
           $id=0;
           while ($est = mysql_fetch_row($ests_result)) {
@@ -73,19 +73,16 @@
         ?>
 
         <a href=<?php echo "maestro.php?idM=".$idM ?>><button type="button" class="btn btn-danger">Cancelar</button></a>
+        <input type="hidden" class="form-control" name = "idM" value = <?php echo '"'.$idM.'"' ?> >
+        <input type="hidden" class="form-control" name = "eval" value = <?php echo '"'.$evalUrl.'"' ?> >
         <button type="submit" class="btn btn-primary">Guardar cambios</button>
 
       </form>
-      <form action= <?php echo '"deleteEva.php?eval='.$evalUrl.'&idM='.$idM.'"' ?> method="post">
+      <form action= "deleteEva.php" method="post">
+        <input type="hidden" class="form-control" name = "idM" value = <?php echo '"'.$idM.'"' ?> >
+        <input type="hidden" class="form-control" name = "eval" value = <?php echo '"'.$evalUrl.'"' ?> >
         <button type="submit" class="btn btn-danger"> Borrar </button>
       </form>
     </table>
   </body>
-
-<!-- Closing the Database -->
-<?php
-mysql_close($conexion);
-?>
-
-
 </html>

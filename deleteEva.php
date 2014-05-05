@@ -19,8 +19,8 @@
   if ($month < 7) {$semestreActual = $year[2].$year[3]."B";}
   else{$semestreActual = $year[2].$year[3]."A";}
 
-  $idM = $_GET['idM'];
-  $evaluacionUrl = $_GET["eval"];
+  $idM = $_POST['idM'];
+  $evaluacionUrl = $_POST["eval"];
   $evaluacion = str_replace("_", " ", $evaluacionUrl);
   
   $sql_idO = "Select o.idO From ofrece As o Where o.semestre='".$semestreActual."' and o.idM='".$idM."'";

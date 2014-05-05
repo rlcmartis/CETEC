@@ -94,9 +94,9 @@
               <h3 class="modal-title" id="myModalLabel">Editar evaluación</h3>
             </div>
             <div class="modal-body">
-              <form class="form-signin" method="post" action="insertStu.php">
+              <form class="form-signin" method="post" action="editarEva.php">
 
-                <div class="navbar">
+<!--                 <div class="navbar">
                   <div class="navbar-inner">
                     <ul class="nav">
                       <li class="dropdown">
@@ -105,23 +105,27 @@
                           <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                          <?php
-                            for ($ev=0; $ev < $cantidadDeEvaluaciones ; $ev++){
-                              $editEval = $newEvaluaciones[$ev];
-                              echo '<li><a href="editarEva.php?eval='.$editEval.'&idM='.$idM.'">'.$editEval.'</a></li>';
-                            }
-                          ?>
+
                         </ul>
                       </li>
                     </ul>
                   </div>
-                </div>
+                </div> -->
+                          <select class="selectpicker" name="eval">
+                          <?php
+                            for ($ev=0; $ev < $cantidadDeEvaluaciones ; $ev++){
+                              $editEval = $newEvaluaciones[$ev];
+                              echo '<option value="'.$editEval.'">'.$editEval.'</option>';
+                            }
+                          ?>
+                          </select>
                 
             </div>
-<!--             <div class="modal-footer">
+            <div class="modal-footer">
+              <input type="hidden" class="form-control" name = "idM" value = <?php echo '"'.$idM.'"' ?>>
               <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
               <button type="submit" class="btn btn-primary">Aceptar</button>
-            </div> -->
+            </div>
             </form>
           </div>
         </div>

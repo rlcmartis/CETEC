@@ -17,8 +17,8 @@ session_start();
     echo "Fall&oacute; conexi&oacute;n \n\n\n";
   }
 	$usarDB = mysql_select_db($database);
-	$idM = $_POST["idM"];
-  $evaluacionUrl = $_GET["eval"];
+	$idM = $_POST['idM'];
+  $evaluacionUrl = $_POST['eval'];
   $evaluacion = str_replace("_", " ", $evaluacionUrl);
   
   date_default_timezone_set('America/Anguilla');
@@ -46,13 +46,13 @@ session_start();
     if(mysql_num_rows($veriResult) > 0){
       $sql_update =  "Update evaluado Set nota='".$casilla."'
                       Where idE='".$idE."' and evaluacion='".$evaluacion."' and idO In (".$sql_idO.")";
-      echo $sql_update;
+      //echo $sql_update;
       $result = mysql_query($sql_update);
     }
     else{
       $sql_insert =  "Insert Into evaluado (nota, idE, evaluacion, idO)
                       Values ('".$casilla."', '".$idE."', '".$evaluacion."', ".$idO[0].")";
-      echo $sql_insert;
+      //echo $sql_insert;
       $resulta = mysql_query($sql_insert);
     }
   }
