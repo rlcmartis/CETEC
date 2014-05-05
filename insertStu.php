@@ -45,12 +45,13 @@
   $resultado = mysql_query($sqlVerifica);
 
   if(mysql_num_rows($resultado) > 0){
-	$sql_update =  'Update estudiante 
-					Set nombre="'.$nombre.'", pago='.$pago.', entro="'.$fechaA.'", 
-					    sale="'.$fechaG.'", idE="'.$idE.'", grupo = '.$grupo.'
-					Where idE='.$idE;
-	$result = mysql_query($sql_update);
-	header("location:secretariaFront.php");
+	$password = $_POST['password'];
+  $sql_update =  'Update estudiante 
+  Set nombre="'.$nombre.'", pago='.$pago.', entro="'.$fechaA.'", 
+     sale="'.$fechaG.'", idE="'.$idE.'", password = "'.$password.'" Grupo = '.$grupo.'
+  Where idE='.$idE;
+  $result = mysql_query($sql_update);
+  header("location:secretariaFront.php”);
   }
   else{
     $sql_insertE = 'Insert Into estudiante (nombre, pago, entro, sale, idE, password) 
