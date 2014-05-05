@@ -18,7 +18,13 @@
   }
   $usarDB = mysql_Select_db($database);
 
-  $idM = $_SESSION['idM'];
+  $lastPage = explode('/', $_SERVER['HTTP_REFERER']);
+  if($lastPage[sizeof($lastPage)-1] == "secretariaFront.php"){
+  	$idM = $_GET['idM'];
+  }
+  elseif($lastPage[sizeof($lastPage)-1] == "index.php"){
+  	$idM = $_SESSION['idM'];
+  }
   date_default_timezone_set('America/Anguilla');
   $year = date('Y', time());
   $month = intval(date('m', time()));
@@ -62,11 +68,44 @@
 	</head>
 	<body>
 
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	        <p class="navbar-brand">
+	          CETEC
+	        </p>
+	        <?php
+	        	$lastPage = explode('/', $_SERVER['HTTP_REFERER']);
+	        	if($lastPage[sizeof($lastPage)-1] == "secretariaFront.php"){
+	        ?>
+		        <p class="navbar-text pull-right">
+		        	 <a href="logout.php"><button type="button" class="btn btn-danger">
+	        				Cerrar Sesión
+	      			</button></a>   
+		        </p>
+		    <?php
+	        	}
+	        	else{
+	        ?>
+	        <p class="navbar-text pull-right">
+	        	
+	        	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalNewE">
+        				Añadir Notas
+      			</button>
+	        	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalN">
+        				Editar Notas
+      			</button>
+	            <a href="logout.php"><button type="button" class="btn btn-danger">
+        				Cerrar Sesión
+      			</button></a>   
+	        </p>
+	        <?php
+	        	}
+	        ?>
+	    </nav>
 		<div class="jumbotron" id="nombre-num">
-			<div class= "row" id="lineaDeSesion"> 
+		<!-- 	<div class= "row" id="lineaDeSesion"> 
 				<div class="col-md-10 col-md-offset-6">
 					<form action = "newEva.php" method = "post">
-						<input type = "hidden" name = "idM" = value = <?php echo '"'.$idM.'"'?>>
+						<input type = "hidden" name = "idM" = value = <?php //echo '"'.$idM.'"'?>>
 						<button type="submit" class="btn btn-info">
         					Añadir Notas
       					</button>
@@ -79,7 +118,7 @@
       				&nbsp;&nbsp;&nbsp;| &nbsp;
 					<a href="logout.php">Cerrar Sesión</a>				
 				</div>
-			</div>
+			</div> -->
 
 			<h1>Nombre:  <?php 
 				$sql_nombre = "Select nombre From maestro Where idM=".$idM;
@@ -125,6 +164,36 @@
                           ?>
                           </select>
                 
+            </div>
+            <div class="modal-footer">
+              <input type="hidden" class="form-control" name = "idM" value = <?php echo '"'.$idM.'"' ?>>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Aceptar</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Modal editar notas-->
+      <div class="modal fade" id="myModalNewE" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h3 class="modal-title" id="myModalLabel">Editar evaluación</h3>
+            </div>
+            <div class="modal-body">
+              <form class="form-signin" method="post" action="editarEva.php">
+                      <div class="row" id="input-pass">
+	                    <input type="text" class="form-control" name="eval" placeholder="Nombre">
+	                  </div>
+
+	                  <!-- Fecha de Admision box -->
+	                  <div class="row" id="input-pass"> 
+	                    <input type="text" class="form-control" name="fechaEva" placeholder="Fecha de Evaluacion">
+	                  </div>
             </div>
             <div class="modal-footer">
               <input type="hidden" class="form-control" name = "idM" value = <?php echo '"'.$idM.'"' ?>>
