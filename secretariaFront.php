@@ -22,10 +22,16 @@
   }
   $usarDB = mysql_select_db($database);
   
+  date_default_timezone_set('America/Anguilla');
+  $year = date('Y', time());
+  $month = intval(date('m', time()));
+  if ($month < 7) {$semestreActual = $year[2].$year[3]."B";}
+  else{$semestreActual = $year[2].$year[3]."A";} 
+
   $sql_nombres = "Select * From estudiante";
   $resultado = mysql_query($sql_nombres);
 
-  $sql_cursos = "SELECT * FROM curso";
+  $sql_cursos = "SELECT * FROM curso Natural Join ofrece";
   $resultado_cursos = mysql_query($sql_cursos);
 
   $sql_maestros = "SELECT * FROM maestro";
@@ -290,7 +296,7 @@
                 <th>Nombre</th>
               </tr>
               <?php
-               while($row = mysql_fetch_row($resultado_cursos)){
+               while($row = mysql_fetch_array($resultado_cursos)){
                     echo '<tr href="http://google.com">'; // NO QUITAR XQ SE DANA TODO
                     // echo '<a href="http://ada.uprrp.edu/~jdelacruz/CETEC/estudiante.php?idE='.$row[4].'">';
                     // echo $row[4];
@@ -304,8 +310,19 @@
                       <button type="submit" class="btn btn-info"> Editar </button>
                     </form>
                     <?php
-                      echo "</td>";
-                      echo "<td>";
+                      echo "</td><td>";
+
+                      if ($row['semestre'] == $semestreActual) {
+                        echo '<form action="matricular.php" method="post">';
+                          echo '<input type="hidden" name="matri" value="'.$row[0].'">';
+                          echo '<button type="submit" class="btn btn-info"> Matricular </button>';
+                      }
+
+                      echo "</td><td>";
+                    ?>
+                    </form>
+                    <?php
+                      echo "</td><td>";
                     ?>
                     <form action='deleteCu.php' method="post">
                       <input type="hidden" name="idC" value="<?php echo $row[0]; ?>">
