@@ -1,7 +1,10 @@
 <?php
   session_start();
-  if(!isset($_SESSION['idM'])){
-    header("location:index.php");
+  // if(!isset($_SESSION['idM'])){
+  //   header("location:index.php");
+  // }
+  if (!$_SESSION['is_prof']) {
+  	header("location:index.php");
   }
 
   //DATABASE CONECTION
@@ -18,11 +21,11 @@
   }
   $usarDB = mysql_Select_db($database);
 
-  $lastPage = explode('/', $_SERVER['HTTP_REFERER']);
-  if($lastPage[sizeof($lastPage)-1] == "secretariaFront.php"){
+  // $lastPage = explode('/', $_SERVER['HTTP_REFERER']);
+  if($_SESSION['is_admin']){
   	$idM = $_GET['idM'];
   }
-  elseif($lastPage[sizeof($lastPage)-1] == "index.php"){
+  elseif($_SESSION['is_prof']){
   	$idM = $_SESSION['idM'];
   }
   date_default_timezone_set('America/Anguilla');
@@ -77,8 +80,8 @@
 	          CETEC
 	        </p>
 	        <?php
-	        	$lastPage = explode('/', $_SERVER['HTTP_REFERER']);
-	        	if($lastPage[sizeof($lastPage)-1] == "secretariaFront.php"){
+	        	// $lastPage = explode('/', $_SERVER['HTTP_REFERER']);
+	        	if(isset($_SESSION['is_admin'])){
 	        ?>
 		        <p class="navbar-text pull-right">
 		        	 <a href="logout.php"><button type="button" class="btn btn-danger">
@@ -87,7 +90,7 @@
 		        </p>
 		    <?php
 	        	}
-	        	else{
+	        	elseif($_SESSION['is_prof']){
 	        ?>
 	        <p class="navbar-text pull-right">
 	        	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalContra">
@@ -107,7 +110,7 @@
 	        	}
 	        ?>
 	    </nav>
-		<div class="jumbotron" id="nombre-num">
+		<div style = "margin-top: 25" class="jumbotron" id="nombre-num">
 		<!-- 	<div class= "row" id="lineaDeSesion"> 
 				<div class="col-md-10 col-md-offset-6">
 					<form action = "newEva.php" method = "post">

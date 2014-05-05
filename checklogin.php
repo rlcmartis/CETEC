@@ -24,6 +24,9 @@
   $idE=$_POST['idE']; 
   $password=$_POST['password']; 
   if ($idE == "admin" and $password == "admin"){
+    $_SESSION['is_admin'] = true;
+    $_SESSION['is_prof'] = true;
+    $_SESSION['is_estu'] = true;
     $_SESSION['idE'] = $idE;
     $_SESSION['idM'] = $idE;
     $_SESSION['password'] = $password;
@@ -54,12 +57,14 @@
         // Register $idE, $password and redirect to file "estudiante.php"
 	    // session_register("idE");
 	    // session_register("password"); 
+        $_SESSION['is_estu'] = true;
         $_SESSION['idE'] = $idE;
         $_SESSION['password'] = $password;
         header("location:estudiante.php");
       }
     }
   elseif ($count2 == 1) {
+    $_SESSION['is_prof'] = true;
     $_SESSION['idM'] = $idE;
     $_SESSION['password'] = $password;
     header("location:maestro.php");

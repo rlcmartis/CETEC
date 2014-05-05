@@ -24,13 +24,13 @@
     $password = $_POST['password'];
     $sql_update =  'UPDATE estudiante SET password = "'.$password.'" WHERE idE="'.$idE.'"';
     $result = mysql_query($sql_update);
-    header("location:estudiante.php");
+    header("location:estudiante.php?".$idE);
   }
   elseif ($postStuff[1] == 'idM') {
     $idM = $_POST['idM'];
     $password = $_POST['password'];
     $sql_update =  'UPDATE maestro SET password = "'.$password.'" WHERE idM="'.$idM.'"';
     $result = mysql_query($sql_update);
-    header("location:maestro.php");
+    header('location:maestro.php?'.$idM);
   }
 ?>
