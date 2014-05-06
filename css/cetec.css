@@ -66,3 +66,20 @@
 	margin-bottom: 7;
 	border-radius: 5;
 }
+
+#tablaEditEva{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#container-EditarEva{
+	margin-top: 80;
+}
+
+#botonBorrarEditEva{
+	margin-right: 804;
+}
+
+#textRightNav{
+	font-size: 20px;
+}
