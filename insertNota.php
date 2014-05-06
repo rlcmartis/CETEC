@@ -28,7 +28,6 @@
   $sqlIDO = 'Select * From ofrece Where idM = "'.$idM.'" and semestre = "'.$semestreActual.'"';
   $sqlIDOResult = mysql_query($sqlIDO);
   $row = mysql_fetch_row($sqlIDOResult);
-  print_r($_POST);
 
   for ($i=0; $i < (sizeof($_POST) - 2)/2; $i++) { 
     $nota = "nota".$i;

@@ -313,9 +313,9 @@
                       echo "</td><td>";
 
                       if ($row['semestre'] == $semestreActual) {
-                        echo '<form action="matricular.php" method="post">';
-                          echo '<input type="hidden" name="matri" value="'.$row[0].'">';
-                          echo '<button type="submit" class="btn btn-info"> Matricular </button>';
+                        echo '<form action="editarMatricula.php" method="post">';
+                        echo '<input type="hidden" name="idO" value="'.$row["idO"].'">';
+                        echo '<button type="submit" class="btn btn-info"> Matricular </button></form>';
                       }
 
                       echo "</td><td>";

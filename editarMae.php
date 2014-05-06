@@ -90,27 +90,27 @@
         <td colspan="2">
         <div class="row" id="input-pass">
         <select class="selectpicker" name="curso" style="margin-left: 70;">
-                        <?php 
-                          $sqlCurso_Actual = 'Select idC from ofrece where idM = "'.$idM.'"';
-                          $sqlCurso_Actual_result = mysql_query($sqlCurso_Actual);
-                          $rowCurso_Actual = mysql_fetch_row($sqlCurso_Actual_result);
-                          $sqlBuscaNombre_Actual = 'SELECT nombre FROM curso WHERE idC="'.$rowCurso_Actual[0].'"';
-                          $sqlBuscaNombre_Actual_result = mysql_query($sqlBuscaNombre_Actual);
-                          $rowNombre_Actual = mysql_fetch_row($sqlBuscaNombre_Actual_result);
+            <?php 
+              $sqlCurso_Actual = 'Select idC from ofrece where idM = "'.$idM.'"';
+              $sqlCurso_Actual_result = mysql_query($sqlCurso_Actual);
+              $rowCurso_Actual = mysql_fetch_row($sqlCurso_Actual_result);
+              $sqlBuscaNombre_Actual = 'SELECT nombre FROM curso WHERE idC="'.$rowCurso_Actual[0].'"';
+              $sqlBuscaNombre_Actual_result = mysql_query($sqlBuscaNombre_Actual);
+              $rowNombre_Actual = mysql_fetch_row($sqlBuscaNombre_Actual_result);
 
-                          echo '<option value = "'.$rowCurso_Actual[0].'">'.$rowNombre_Actual[0].'</option>';
-                          
+              echo '<option value = "'.$rowCurso_Actual[0].'">'.$rowNombre_Actual[0].'</option>';
+              
 
-                          $sql_Cursos_sinM = 'SELECT idC From curso Where idC NOT IN
-                                              (Select idC From ofrece Where semestre="'.$semestreActual.'")';
-                          $sql_Cursos_sinM_result = mysql_query($sql_Cursos_sinM);
-                          while ($rowCursos = mysql_fetch_row($sql_Cursos_sinM_result)) {
-                            $sqlBuscaNombre = 'SELECT nombre FROM curso WHERE idC="'.$rowCursos[0].'"';
-                            $sqlBuscaNombre_result = mysql_query($sqlBuscaNombre);
-                            $sqlBuscaNombre_result_row = mysql_fetch_row($sqlBuscaNombre_result);
-                            echo '<option value="'.$rowCursos[0].'">'.$sqlBuscaNombre_result_row[0].'</option>';
-                          }
-                        ?>
+              $sql_Cursos_sinM = 'SELECT idC From curso Where idC NOT IN
+                                  (Select idC From ofrece Where semestre="'.$semestreActual.'")';
+              $sql_Cursos_sinM_result = mysql_query($sql_Cursos_sinM);
+              while ($rowCursos = mysql_fetch_row($sql_Cursos_sinM_result)) {
+                $sqlBuscaNombre = 'SELECT nombre FROM curso WHERE idC="'.$rowCursos[0].'"';
+                $sqlBuscaNombre_result = mysql_query($sqlBuscaNombre);
+                $sqlBuscaNombre_result_row = mysql_fetch_row($sqlBuscaNombre_result);
+                echo '<option value="'.$rowCursos[0].'">'.$sqlBuscaNombre_result_row[0].'</option>';
+              }
+            ?>
         </select>
       </div>
       </td>
