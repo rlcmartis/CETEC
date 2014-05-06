@@ -73,8 +73,15 @@
             echo "<tr><td>".$est[1]."</td><td>"; ?>
 
             <div class="row" id="input-pass">
-              <input type="text" class="form-control" name="<?php echo $id; ?>" value="<?php echo $nota[0]; ?>">
-            </div>
+            <select class="selectpicker" name = "<?php echo $id; ?>" style="margin-left: 25;">
+              <option value = " " <?php if($nota[0] == " "){echo " selected";} ?>>  </option>
+              <option value = "A" <?php if($nota[0] == "A"){echo " selected";} ?>> A </option>
+              <option value = "B" <?php if($nota[0] == "B"){echo " selected";} ?>> B </option>
+              <option value = "C" <?php if($nota[0] == "C"){echo " selected";} ?>> C </option>
+              <option value = "D" <?php if($nota[0] == "D"){echo " selected";} ?>> D </option>
+              <option value = "F" <?php if($nota[0] == "F"){echo " selected";} ?>> F </option>
+            </select>
+          </div>
 
             <?php
             echo "</td></tr>";

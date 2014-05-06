@@ -46,13 +46,17 @@ session_start();
     if(mysql_num_rows($veriResult) > 0){
       $sql_update =  "Update evaluado Set nota='".$casilla."'
                       Where idE='".$idE."' and evaluacion='".$evaluacion."' and idO In (".$sql_idO.")";
-      //echo $sql_update;
+      // echo "<br>";
+      // echo $sql_update;
+      // echo "<br>";
       $result = mysql_query($sql_update);
     }
     else{
       $sql_insert =  "Insert Into evaluado (nota, idE, evaluacion, idO)
                       Values ('".$casilla."', '".$idE."', '".$evaluacion."', ".$idO[0].")";
-      //echo $sql_insert;
+      //  echo "<br>";
+      // echo $sql_insert;
+      //  echo "<br>";
       $resulta = mysql_query($sql_insert);
     }
   }

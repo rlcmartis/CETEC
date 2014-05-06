@@ -97,7 +97,7 @@
                 Editar Contraseña
             	</button>
 	        	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalNewE">
-        				Añadir Notas
+        				Añadir Evaluación
       			</button>
 	        	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalN">
         				Editar Notas
