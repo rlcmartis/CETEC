@@ -50,7 +50,18 @@
     <title>Editar Evaluaci&oacute;n</title>
   </head>
   <body>
-    <table>
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <p class="navbar-brand">
+              CETEC
+            </p>
+            <p class="navbar-text pull-right" id="textRightNav">
+              <?php
+                echo $evaluacion;
+              ?>
+            </p>
+        </nav>
+    <div class="container" id="container-EditarEva">
+    <table id="tablaEditEva">
       <form class="form-signin" method="post" action= "insertEva.php" >
         <?php
           $id=0;
@@ -72,17 +83,17 @@
           echo "</table>";
         ?>
 
-        <a href=<?php echo "maestro.php?idM=".$idM ?>><button type="button" class="btn btn-danger">Cancelar</button></a>
-        <input type="hidden" class="form-control" name = "idM" value = <?php echo '"'.$idM.'"' ?> >
-        <input type="hidden" class="form-control" name = "eval" value = <?php echo '"'.$evalUrl.'"' ?> >
-        <button type="submit" class="btn btn-primary">Guardar cambios</button>
-
-      </form>
-      <form action= "deleteEva.php" method="post">
-        <input type="hidden" class="form-control" name = "idM" value = <?php echo '"'.$idM.'"' ?> >
-        <input type="hidden" class="form-control" name = "eval" value = <?php echo '"'.$evalUrl.'"' ?> >
-        <button type="submit" class="btn btn-danger"> Borrar </button>
+        <div class = "modal-footer">
+          
+          <input type="hidden" class="form-control" name = "idM" value = <?php echo '"'.$idM.'"' ?> >
+          <input type="hidden" class="form-control" name = "eval" value = <?php echo '"'.$evalUrl.'"' ?> >
+          <button formaction="deleteEva.php" type="submit" class="btn btn-danger" id="botonBorrarEditEva"> Borrar </button>
+          <a href=<?php echo "maestro.php?idM=".$idM ?>><button type="button" class="btn btn-danger">Cancelar</button></a>
+          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          
+        </div>
       </form>
     </table>
+  </div>
   </body>
 </html>

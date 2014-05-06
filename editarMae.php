@@ -40,24 +40,56 @@
     <title>Editar Curso</title>
   </head>
 	<body>
-		<div class="container" id="editCont">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <p class="navbar-brand">
+              CETEC
+            </p>
+            <p class="navbar-text pull-right" id="textRightNav">
+              <?php
+                echo $row[1];
+              ?>
+            </p>
+        </nav>
+		<div class="container" id="container-EditarEva">
+     <table id="tablaEditEva" style="width: 500px">
 			<form class="form-signin" method="post" action="insertMae.php">
 				<!-- Nombre box -->
-				<div class="row" id="input-pass">
-					<input type="text" class="form-control" name="nombreM" value="<?php echo $row[1]; ?>">
-				</div>
+        <tr>
+          <td style="text-align: right;">  
+            Nombre
+          </td>
+          <td>
+    				<div class="row" id="input-pass">
+    					<input type="text" class="form-control" name="nombreM" value="<?php echo $row[1]; ?>">
+    				</div>
+          </td>
+        </tr>
 
 				<!-- Fecha de Graduación box -->
-				<div class="row" id="input-pass"> 
-					<input type="text" class="form-control" name="idM" value="<?php echo $row[0]; ?>">
-				</div>
-
-        <div class="row" id="input-pass"> 
-          <input type="text" class="form-control" name="password" value="<?php echo $row[2]; ?>">
-        </div>
-
+        <tr>
+          <td style="text-align: right;">  
+            ID del maestro
+          </td>
+        <td>
+  				<div class="row" id="input-pass"> 
+  					<input type="text" class="form-control" name="idM" value="<?php echo $row[0]; ?>">
+  				</div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right;">  
+          Contraseña
+        </td>
+        <td>
+          <div class="row" id="input-pass"> 
+            <input type="text" class="form-control" name="password" value="<?php echo $row[2]; ?>">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
         <div class="row" id="input-pass">
-        <select class="selectpicker" name="curso">
+        <select class="selectpicker" name="curso" style="margin-left: 70;">
                         <?php 
                           $sqlCurso_Actual = 'Select idC from ofrece where idM = "'.$idM.'"';
                           $sqlCurso_Actual_result = mysql_query($sqlCurso_Actual);
@@ -81,6 +113,9 @@
                         ?>
         </select>
       </div>
+      </td>
+    </tr>
+    </table>
 				<div class="modal-footer">
 					<a href=<?php echo "secretariaFront.php" ?>><button type="button" class="btn btn-danger">Cancelar</button></a>
 					<button type="submit" class="btn btn-primary">Guardar cambios</button>

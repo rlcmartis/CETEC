@@ -32,23 +32,49 @@
     <title>Editar Curso</title>
   </head>
 	<body>
-		<div class="container" id="editCont">
-			<form class="form-signin" method="post" action="insertCu.php">
-				<!-- Nombre box -->
-				<div class="row" id="input-pass">
-					<input type="text" class="form-control" name="nombreC" value="<?php echo $row[1]; ?>">
-				</div>
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <p class="navbar-brand">
+              CETEC
+            </p>
+            <p class="navbar-text pull-right" id="textRightNav">
+              <?php
+                echo $row[1];
+              ?>
+            </p>
+        </nav>
 
-				<!-- Fecha de Graduación box -->
-				<div class="row" id="input-pass"> 
-					<input type="text" class="form-control" name="idC" value="<?php echo $row[0]; ?>">
-				</div>
+		<div class="container" id="container-EditarEva">
+      <table id="tablaEditEva" style="width: 500px">
+  			<form class="form-signin" method="post" action="insertCu.php">
+  				<!-- Nombre box -->
+          <tr>
+            <td style="text-align: right;">  
+              Nombre
+            </td>
+            <td>
+      				<div class="row" id="input-pass">
+      					<input type="text" class="form-control" name="nombreC" value="<?php echo $row[1]; ?>">
+      				</div>
+            </td>
+          <tr>
 
-				<div class="modal-footer">
-					<a href=<?php echo "secretariaFront.php" ?>><button type="button" class="btn btn-danger">Cancelar</button></a>
-					<button type="submit" class="btn btn-primary">Guardar cambios</button>
-				</div>
-			</form>
+  				<!-- Fecha de Graduación box -->
+          <tr>
+            <td style="text-align: right;">  
+              Codigo
+            </td>
+          <td>
+  				<div class="row" id="input-pass"> 
+  					<input type="text" class="form-control" name="idC" value="<?php echo $row[0]; ?>">
+  				</div>
+        </td>
+      </tr>
+      </table>
+  				<div class="modal-footer">
+  					<a href=<?php echo "secretariaFront.php" ?>><button type="button" class="btn btn-danger">Cancelar</button></a>
+  					<button type="submit" class="btn btn-primary">Guardar cambios</button>
+  				</div>
+  			</form>
 		</div>
 	</body>
 </html>

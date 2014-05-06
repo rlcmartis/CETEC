@@ -70,7 +70,7 @@
     header("location:maestro.php");
   }
   else {	
-    echo "Wrong idE or Password";
+    header("location:wrongIdOrpass.html");
   }
 }
 ?>
